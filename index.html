@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>איתותים - תקשורת בין נהגים</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #FF6B00;
+    --orange-light: #FF8C35;
+    --blue: #1A3A6B;
+    --yellow: #FFD000;
+    --white: #FFFFFF;
+    --gray: #F5F5F5;
+    --text: #1A1A1A;
+    --text-light: #666;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: var(--white);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    padding: 16px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--blue);
+  }
+
+  .nav-logo img {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 500;
+    font-size: 15px;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--orange); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0A1628 0%, #1A3A6B 50%, #0F2447 100%);
+    display: flex;
+    align-items: center;
+    padding: 100px 40px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; left: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(255,107,0,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(255,208,0,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-text h1 {
+    font-size: 64px;
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+
+  .hero-text h1 span {
+    color: var(--orange);
+  }
+
+  .hero-text p {
+    font-size: 20px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.7;
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+
+  .download-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-download {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 28px;
+    border-radius: 14px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+    transition: all 0.3s;
+  }
+
+  .btn-android {
+    background: var(--orange);
+    color: var(--white);
+  }
+
+  .btn-ios {
+    background: rgba(255,255,255,0.1);
+    color: var(--white);
+    border: 2px solid rgba(255,255,255,0.3);
+  }
+
+  .btn-download:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+  }
+
+  .btn-android:hover { background: var(--orange-light); }
+  .btn-ios:hover { background: rgba(255,255,255,0.2); }
+
+  .btn-icon { font-size: 24px; }
+
+  .hero-phone {
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+
+  .phone-mockup {
+    width: 280px;
+    background: #111;
+    border-radius: 40px;
+    padding: 12px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1);
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+
+  .phone-screen {
+    background: white;
+    border-radius: 30px;
+    overflow: hidden;
+    aspect-ratio: 9/19;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, #fff 0%, #f8f8f8 100%);
+  }
+
+  .phone-screen-content {
+    width: 100%;
+    height: 100%;
+    padding: 20px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .app-logo-preview {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #e8f4ff, #d0e8ff);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin-bottom: 4px;
+  }
+
+  .screen-title {
+    font-size: 11px;
+    font-weight: 900;
+    color: #1A1A1A;
+    text-align: center;
+  }
+
+  .plate-card {
+    width: 100%;
+    background: #FFD000;
+    border-radius: 8px;
+    padding: 8px 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+  }
+
+  .plate-flag {
+    background: #003399;
+    color: white;
+    font-size: 6px;
+    font-weight: bold;
+    padding: 2px 3px;
+    border-radius: 2px;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .plate-text {
+    font-size: 9px;
+    font-weight: 900;
+    color: #1A1A1A;
+    flex: 1;
+    text-align: center;
+  }
+
+  /* FEATURES */
+  .features {
+    padding: 100px 40px;
+    background: var(--white);
+  }
+
+  .section-title {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .section-title h2 {
+    font-size: 42px;
+    font-weight: 900;
+    color: var(--blue);
+    margin-bottom: 16px;
+  }
+
+  .section-title p {
+    font-size: 18px;
+    color: var(--text-light);
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .features-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  .feature-card {
+    background: var(--gray);
+    border-radius: 24px;
+    padding: 36px 30px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 80px; height: 80px;
+    background: var(--orange);
+    opacity: 0.06;
+    border-radius: 0 24px 0 80px;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+  }
+
+  .feature-icon {
+    font-size: 40px;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .feature-card h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: 12px;
+  }
+
+  .feature-card p {
+    font-size: 15px;
+    color: var(--text-light);
+    line-height: 1.7;
+  }
+
+  /* SCREENSHOTS */
+  .screenshots {
+    padding: 100px 40px;
+    background: linear-gradient(180deg, #F8F9FF 0%, #EEF2FF 100%);
+  }
+
+  .screenshots-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .screenshot-frame {
+    background: #111;
+    border-radius: 28px;
+    padding: 8px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+    transition: transform 0.3s;
+  }
+
+  .screenshot-frame:hover { transform: translateY(-8px) scale(1.02); }
+
+  .screenshot-frame img {
+    width: 100%;
+    border-radius: 22px;
+    display: block;
+  }
+
+  .screenshot-placeholder {
+    width: 100%;
+    aspect-ratio: 9/19;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: #888;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .screenshot-placeholder .ss-icon { font-size: 36px; }
+
+  /* HOW IT WORKS */
+  .how-it-works {
+    padding: 100px 40px;
+    background: var(--white);
+  }
+
+  .steps {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 30px;
+    align-items: start;
+    padding: 30px 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .step:last-child { border-bottom: none; }
+
+  .step-number {
+    width: 60px;
+    height: 60px;
+    background: var(--orange);
+    color: white;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+
+  .step-content h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: 8px;
+    margin-top: 10px;
+  }
+
+  .step-content p {
+    font-size: 16px;
+    color: var(--text-light);
+    line-height: 1.7;
+  }
+
+  /* DOWNLOAD CTA */
+  .download-cta {
+    padding: 100px 40px;
+    background: linear-gradient(135deg, #0A1628 0%, #1A3A6B 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .download-cta::before {
+    content: '🚗';
+    position: absolute;
+    font-size: 300px;
+    opacity: 0.04;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .download-cta h2 {
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--white);
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .download-cta p {
+    font-size: 18px;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .btn-cta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 36px;
+    border-radius: 16px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 18px;
+    transition: all 0.3s;
+  }
+
+  .btn-cta-android {
+    background: var(--orange);
+    color: white;
+  }
+
+  .btn-cta-ios {
+    background: white;
+    color: var(--blue);
+  }
+
+  .btn-cta:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+  }
+
+  /* CONTACT */
+  .contact {
+    padding: 100px 40px;
+    background: var(--gray);
+  }
+
+  .contact-inner {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .contact-inner h2 {
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--blue);
+    margin-bottom: 16px;
+  }
+
+  .contact-inner p {
+    font-size: 16px;
+    color: var(--text-light);
+    margin-bottom: 40px;
+    line-height: 1.7;
+  }
+
+  .contact-card {
+    background: white;
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid #eee;
+    text-align: right;
+  }
+
+  .contact-item:last-child { border-bottom: none; }
+
+  .contact-item-icon {
+    width: 48px;
+    height: 48px;
+    background: #FFF3E8;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .contact-item-text {
+    flex: 1;
+  }
+
+  .contact-item-text span {
+    display: block;
+    font-size: 13px;
+    color: var(--text-light);
+    margin-bottom: 2px;
+  }
+
+  .contact-item-text a, .contact-item-text strong {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--blue);
+    text-decoration: none;
+  }
+
+  .contact-item-text a:hover { color: var(--orange); }
+
+  /* PRIVACY */
+  .privacy {
+    padding: 80px 40px;
+    background: white;
+  }
+
+  .privacy-inner {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .privacy-inner h2 {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--blue);
+    margin-bottom: 24px;
+  }
+
+  .privacy-inner p {
+    font-size: 15px;
+    color: var(--text-light);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  .privacy-inner h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 24px 0 12px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: #0A1628;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 30px 40px;
+    font-size: 14px;
+  }
+
+  footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
+  footer a:hover { color: var(--orange); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 20px 60px; }
+    .hero-content { grid-template-columns: 1fr; gap: 40px; }
+    .hero-text h1 { font-size: 40px; }
+    .hero-phone { order: -1; }
+    .phone-mockup { width: 200px; }
+    .features, .screenshots, .how-it-works, .download-cta, .contact, .privacy { padding: 60px 20px; }
+    .features-grid, .screenshots-grid { grid-template-columns: 1fr; }
+    .section-title h2 { font-size: 30px; }
+    .download-cta h2 { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <span>🚗</span>
+    <span>איתותים</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#features">יתרונות</a></li>
+    <li><a href="#how">איך זה עובד</a></li>
+    <li><a href="#download">הורדה</a></li>
+    <li><a href="#contact">צור קשר</a></li>
+    <li><a href="#privacy">פרטיות</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1>תקשורת בין נהגים — <span>בקלות</span></h1>
+      <p>שלח הודעה לכל נהג על הכביש רק עם מספר הלוחית שלו. ללא שיתוף מספר טלפון.</p>
+      <div class="download-buttons">
+        <a href="https://play.google.com/store" class="btn-download btn-android" id="android-link">
+          <span class="btn-icon">▶</span>
+          <div>
+            <div style="font-size:11px;font-weight:400;opacity:0.85">הורד מ-</div>
+            <div>Google Play</div>
+          </div>
+        </a>
+        <a href="https://apps.apple.com" class="btn-download btn-ios" id="ios-link">
+          <span class="btn-icon">🍎</span>
+          <div>
+            <div style="font-size:11px;font-weight:400;opacity:0.85">הורד מ-</div>
+            <div>App Store</div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="hero-phone">
+      <div class="phone-mockup">
+        <div class="phone-screen">
+          <div class="phone-screen-content">
+            <div class="app-logo-preview">🚗</div>
+            <div class="screen-title">ברוכים הבאים לאיתותים</div>
+            <div style="font-size:9px;color:#888;margin-bottom:8px">שלח איתות לכל נהג</div>
+            <div class="plate-card">
+              <div class="plate-flag">★<br>IL</div>
+              <div class="plate-text">שיחקת-אותה 👑</div>
+            </div>
+            <div class="plate-card">
+              <div class="plate-flag">★<br>IL</div>
+              <div class="plate-text">מפנה-מקום 🅿️</div>
+            </div>
+            <div class="plate-card">
+              <div class="plate-flag">★<br>IL</div>
+              <div class="plate-text">זהירות ❕</div>
+            </div>
+            <div class="plate-card">
+              <div class="plate-flag">★<br>IL</div>
+              <div class="plate-text">יום-זהב ✨</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="section-title">
+    <h2>למה איתותים?</h2>
+    <p>הדרך הכי פשוטה לתקשר עם נהגים אחרים</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <span class="feature-icon">🚗</span>
+      <h3>לפי מספר לוחית</h3>
+      <p>שלח הודעה לכל רכב רשום — רק צריך את מספר הלוחית. פשוט וישיר.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔔</span>
+      <h3>התראות בזמן אמת</h3>
+      <p>קבל התראות מיידיות כשמישהו שולח לך איתות — אפילו כשהאפליקציה סגורה.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔒</span>
+      <h3>פרטיות מלאה</h3>
+      <p>ללא שיתוף מספר טלפון. הזהות שלך מוגנת — רק מספר הרכב גלוי.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">⚡</span>
+      <h3>הודעות מהירות</h3>
+      <p>בחר מרשימת איתותים מוכנים — שחקת אותה, מפנה מקום, זהירות ועוד.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">💬</span>
+      <h3>הודעה חופשית</h3>
+      <p>רוצה להגיד משהו ספציפי? כתוב הודעה חופשית לכל נהג.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📱</span>
+      <h3>iOS ו-Android</h3>
+      <p>זמין לכולם — iPhone ו-Android. אותה חוויה, אותה נוחות.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SCREENSHOTS -->
+<section class="screenshots" id="screenshots">
+  <div class="section-title">
+    <h2>צילומי מסך</h2>
+    <p>ממשק נקי ופשוט לשימוש</p>
+  </div>
+  <div class="screenshots-grid">
+    <div class="screenshot-frame">
+      <div class="screenshot-placeholder">
+        <span class="ss-icon">📱</span>
+        <span>מסך הרשמה</span>
+      </div>
+    </div>
+    <div class="screenshot-frame">
+      <div class="screenshot-placeholder">
+        <span class="ss-icon">🚗</span>
+        <span>מסך ראשי</span>
+      </div>
+    </div>
+    <div class="screenshot-frame">
+      <div class="screenshot-placeholder">
+        <span class="ss-icon">💬</span>
+        <span>מסך שיחות</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works" id="how">
+  <div class="section-title">
+    <h2>איך זה עובד?</h2>
+    <p>שלושה צעדים פשוטים</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-number">1</div>
+      <div class="step-content">
+        <h3>הירשם עם מספר הרכב שלך</h3>
+        <p>הזן את מספר הלוחית שלך, מספר טלפון לאימות, ואימייל. האימות מתבצע בקוד SMS.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-number">2</div>
+      <div class="step-content">
+        <h3>הזן מספר רכב ושלח איתות</h3>
+        <p>הזן את מספר הלוחית של הרכב שאליו תרצה לפנות, בחר איתות מוכן או כתוב הודעה חופשית.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-number">3</div>
+      <div class="step-content">
+        <h3>הנהג מקבל התראה מיידית</h3>
+        <p>הנהג מקבל push notification עם ההודעה שלך, ויכול להגיב בחזרה.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOWNLOAD CTA -->
+<section class="download-cta" id="download">
+  <h2>הורד עכשיו — חינם!</h2>
+  <p>זמין ל-Android ול-iPhone</p>
+  <div class="cta-buttons">
+    <a href="https://play.google.com/store" class="btn-cta btn-cta-android" id="android-link-2">
+      <span style="font-size:28px">▶</span>
+      <div style="text-align:right">
+        <div style="font-size:12px;font-weight:400;opacity:0.85">הורד מ-</div>
+        <div>Google Play</div>
+      </div>
+    </a>
+    <a href="https://apps.apple.com" class="btn-cta btn-cta-ios" id="ios-link-2">
+      <span style="font-size:28px">🍎</span>
+      <div style="text-align:right">
+        <div style="font-size:12px;font-weight:400;opacity:0.6">הורד מ-</div>
+        <div>App Store</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <h2>צור קשר ותמיכה</h2>
+    <p>שאלות? בעיות? אנחנו כאן בשבילך</p>
+    <div class="contact-card">
+      <div class="contact-item">
+        <div class="contact-item-icon">📧</div>
+        <div class="contact-item-text">
+          <span>אימייל תמיכה</span>
+          <a href="mailto:Autochat1000@gmail.com">Autochat1000@gmail.com</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">⏰</div>
+        <div class="contact-item-text">
+          <span>זמן תגובה</span>
+          <strong>עד 24 שעות</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section class="privacy" id="privacy">
+  <div class="privacy-inner">
+    <h2>מדיניות פרטיות</h2>
+    <p>עדכון אחרון: מרץ 2026</p>
+
+    <h3>מידע שאנו אוספים</h3>
+    <p>האפליקציה אוספת את הנתונים הבאים בעת ההרשמה: מספר רכב, מספר טלפון ואימייל. מידע זה נדרש לצורך אימות זהותך ואפשרת התקשורת עם נהגים אחרים.</p>
+
+    <h3>שימוש במידע</h3>
+    <p>המידע שנאסף משמש אך ורק לצורך הפעלת שירות האיתותים — זיהוי משתמשים, שליחת התראות ואפשרת תקשורת בין נהגים. לא נמכור או נעביר את המידע לצדדים שלישיים לצרכי פרסום.</p>
+
+    <h3>אבטחת מידע</h3>
+    <p>המידע מאוחסן בשרתי Firebase של Google ומאובטח בתקני הצפנה מתקדמים. מספרי הטלפון משמשים לאימות בלבד.</p>
+
+    <h3>מחיקת חשבון</h3>
+    <p>לבקשת מחיקת החשבון והנתונים שלך, אנא פנה אלינו בכתובת: <a href="mailto:Autochat1000@gmail.com" style="color:var(--orange)">Autochat1000@gmail.com</a></p>
+
+    <h3>יצירת קשר</h3>
+    <p>לכל שאלה בנוגע למדיניות הפרטיות: <a href="mailto:Autochat1000@gmail.com" style="color:var(--orange)">Autochat1000@gmail.com</a></p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 איתותים | <a href="#privacy">מדיניות פרטיות</a> | <a href="#contact">צור קשר</a></p>
+</footer>
+
+</body>
+</html>
