@@ -429,7 +429,13 @@ window.loginStep1 = async function(){
   if(!phone||phone.length<9)return showAlert('login-alert','יש להזין מספר טלפון תקין','error');
   const fp=formatPhone(phone);
   try{
-    if(!window.recaptchaLoginVerifier)window.recaptchaLoginVerifier=new RecaptchaVerifier(auth,'recaptcha-login-container',{size:'normal'});
+if(!window.recaptchaLoginVerifier){
+  window.recaptchaLoginVerifier=new RecaptchaVerifier(auth,'recaptcha-login-container',{
+    size:'normal',
+    callback:(response)=>{}
+  });
+  await window.recaptchaLoginVerifier.render();
+}
     loginConfirmationResult=await signInWithPhoneNumber(auth,fp,window.recaptchaLoginVerifier);
     document.getElementById('login-step1').style.display='none';
     document.getElementById('login-step2').style.display='block';
