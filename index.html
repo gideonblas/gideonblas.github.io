@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.googleapis.com https://*.gstatic.com https://www.google.com https://recaptcha.google.com https://apis.google.com; frame-src https://www.google.com https://recaptcha.google.com https://*.firebaseapp.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
 <title>איתותים - תקשורת בין נהגים</title>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
@@ -312,7 +313,7 @@ footer a:hover{color:var(--orange)}
   </section>
 
   <div class="simple-section" id="contact">
-    <div class="simple-inner"><h2>צור קשר</h2><p>📧 <a href="mailto:Autochat1000@gmail.com">Autochat1000@gmail.com</a></p></div>
+    <div class="simple-inner"><h2>צור קשר</h2><p>📧 <a href="/cdn-cgi/l/email-protection#aaebdfdec5c9c2cbde9b9a9a9aeacdc7cbc3c684c9c5c7"><span class="__cf_email__" data-cfemail="cb8abebfa4a8a3aabffafbfbfb8baca6aaa2a7e5a8a4a6">[email&#160;protected]</span></a></p></div>
   </div>
   <div class="simple-section" id="privacy" style="background:white">
     <div class="simple-inner">
@@ -322,7 +323,7 @@ footer a:hover{color:var(--orange)}
       <h3>שימוש במידע</h3>
       <p>המידע משמש לצורך הפעלת שירות האיתותים בלבד. לא נמכור את המידע לצדדים שלישיים.</p>
       <h3>יצירת קשר</h3>
-      <p><a href="mailto:Autochat1000@gmail.com">Autochat1000@gmail.com</a></p>
+      <p><a href="/cdn-cgi/l/email-protection#cc8db9b8a3afa4adb8fdfcfcfc8caba1ada5a0e2afa3a1"><span class="__cf_email__" data-cfemail="acedd9d8c3cfc4cdd89d9c9c9ceccbc1cdc5c082cfc3c1">[email&#160;protected]</span></a></p>
     </div>
   </div>
   <footer><p>© 2026 איתותים | <a href="#" onclick="scrollToId('privacy');return false">מדיניות פרטיות</a> | <a href="#" onclick="scrollToId('contact');return false">צור קשר</a></p></footer>
@@ -379,7 +380,7 @@ footer a:hover{color:var(--orange)}
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
@@ -691,16 +692,4 @@ window.openChat = async function(otherPlate) {
   });
 };
 
-window.closeChat = function() { document.getElementById('chat-modal').classList.remove('show'); currentChatPlate = null; };
-
-window.sendReply = async function() {
-  const text = document.getElementById('chat-reply-input').value.trim();
-  if (!text || !currentChatPlate) return;
-  await sendMessage(currentChatPlate, text);
-  document.getElementById('chat-reply-input').value = '';
-  window.openChat(currentChatPlate);
-};
-</script>
-
-</body>
-</html>
+window.closeChat = function() { document.getElementById('c
