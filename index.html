@@ -6,885 +6,555 @@
 <title>איתותים - תקשורת בין נהגים</title>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --orange: #FF6B00;
-    --orange-light: #FF8C35;
-    --blue: #1A3A6B;
-    --yellow: #FFD000;
-    --white: #FFFFFF;
-    --gray: #F5F5F5;
-    --text: #1A1A1A;
-    --text-light: #666;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'Heebo', sans-serif;
-    background: var(--white);
-    color: var(--text);
-    overflow-x: hidden;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    background: rgba(255,255,255,0.95);
-    backdrop-filter: blur(10px);
-    padding: 16px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid rgba(0,0,0,0.08);
-  }
-
-  .nav-logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 22px;
-    font-weight: 900;
-    color: var(--blue);
-  }
-
-  .nav-logo img {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 32px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    text-decoration: none;
-    color: var(--text);
-    font-weight: 500;
-    font-size: 15px;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover { color: var(--orange); }
-
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    background: linear-gradient(135deg, #0A1628 0%, #1A3A6B 50%, #0F2447 100%);
-    display: flex;
-    align-items: center;
-    padding: 100px 40px 60px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -200px; left: -200px;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(255,107,0,0.15) 0%, transparent 70%);
-    border-radius: 50%;
-  }
-
-  .hero::after {
-    content: '';
-    position: absolute;
-    bottom: -100px; right: -100px;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(255,208,0,0.1) 0%, transparent 70%);
-    border-radius: 50%;
-  }
-
-  .hero-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-  }
-
-  .hero-text h1 {
-    font-size: 64px;
-    font-weight: 900;
-    color: var(--white);
-    line-height: 1.1;
-    margin-bottom: 24px;
-  }
-
-  .hero-text h1 span {
-    color: var(--orange);
-  }
-
-  .hero-text p {
-    font-size: 20px;
-    color: rgba(255,255,255,0.75);
-    line-height: 1.7;
-    margin-bottom: 40px;
-    font-weight: 300;
-  }
-
-  .download-buttons {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .btn-download {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 28px;
-    border-radius: 14px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 16px;
-    transition: all 0.3s;
-  }
-
-  .btn-android {
-    background: var(--orange);
-    color: var(--white);
-  }
-
-  .btn-ios {
-    background: rgba(255,255,255,0.1);
-    color: var(--white);
-    border: 2px solid rgba(255,255,255,0.3);
-  }
-
-  .btn-download:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-  }
-
-  .btn-android:hover { background: var(--orange-light); }
-  .btn-ios:hover { background: rgba(255,255,255,0.2); }
-
-  .btn-icon { font-size: 24px; }
-
-  .hero-phone {
-    display: flex;
-    justify-content: center;
-    position: relative;
-  }
-
-  .phone-mockup {
-    width: 280px;
-    background: #111;
-    border-radius: 40px;
-    padding: 12px;
-    box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1);
-    animation: float 3s ease-in-out infinite;
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
-  }
-
-  .phone-screen {
-    background: white;
-    border-radius: 30px;
-    overflow: hidden;
-    aspect-ratio: 9/19;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(180deg, #fff 0%, #f8f8f8 100%);
-  }
-
-  .phone-screen-content {
-    width: 100%;
-    height: 100%;
-    padding: 20px 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .app-logo-preview {
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, #e8f4ff, #d0e8ff);
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
-    margin-bottom: 4px;
-  }
-
-  .screen-title {
-    font-size: 11px;
-    font-weight: 900;
-    color: #1A1A1A;
-    text-align: center;
-  }
-
-  .plate-card {
-    width: 100%;
-    background: #FFD000;
-    border-radius: 8px;
-    padding: 8px 10px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 4px;
-  }
-
-  .plate-flag {
-    background: #003399;
-    color: white;
-    font-size: 6px;
-    font-weight: bold;
-    padding: 2px 3px;
-    border-radius: 2px;
-    text-align: center;
-    line-height: 1.2;
-  }
-
-  .plate-text {
-    font-size: 9px;
-    font-weight: 900;
-    color: #1A1A1A;
-    flex: 1;
-    text-align: center;
-  }
-
-  /* FEATURES */
-  .features {
-    padding: 100px 40px;
-    background: var(--white);
-  }
-
-  .section-title {
-    text-align: center;
-    margin-bottom: 60px;
-  }
-
-  .section-title h2 {
-    font-size: 42px;
-    font-weight: 900;
-    color: var(--blue);
-    margin-bottom: 16px;
-  }
-
-  .section-title p {
-    font-size: 18px;
-    color: var(--text-light);
-    max-width: 500px;
-    margin: 0 auto;
-    line-height: 1.7;
-  }
-
-  .features-grid {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-  }
-
-  .feature-card {
-    background: var(--gray);
-    border-radius: 24px;
-    padding: 36px 30px;
-    transition: all 0.3s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .feature-card::before {
-    content: '';
-    position: absolute;
-    top: 0; right: 0;
-    width: 80px; height: 80px;
-    background: var(--orange);
-    opacity: 0.06;
-    border-radius: 0 24px 0 80px;
-  }
-
-  .feature-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-  }
-
-  .feature-icon {
-    font-size: 40px;
-    margin-bottom: 20px;
-    display: block;
-  }
-
-  .feature-card h3 {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--blue);
-    margin-bottom: 12px;
-  }
-
-  .feature-card p {
-    font-size: 15px;
-    color: var(--text-light);
-    line-height: 1.7;
-  }
-
-  /* SCREENSHOTS */
-  .screenshots {
-    padding: 100px 40px;
-    background: linear-gradient(180deg, #F8F9FF 0%, #EEF2FF 100%);
-  }
-
-  .screenshots-grid {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
-
-  .screenshot-frame {
-    background: #111;
-    border-radius: 28px;
-    padding: 8px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-    transition: transform 0.3s;
-  }
-
-  .screenshot-frame:hover { transform: translateY(-8px) scale(1.02); }
-
-  .screenshot-frame img {
-    width: 100%;
-    border-radius: 22px;
-    display: block;
-  }
-
-  .screenshot-placeholder {
-    width: 100%;
-    aspect-ratio: 9/19;
-    border-radius: 22px;
-    background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    color: #888;
-    font-size: 13px;
-    font-weight: 500;
-  }
-
-  .screenshot-placeholder .ss-icon { font-size: 36px; }
-
-  /* HOW IT WORKS */
-  .how-it-works {
-    padding: 100px 40px;
-    background: var(--white);
-  }
-
-  .steps {
-    max-width: 900px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .step {
-    display: grid;
-    grid-template-columns: 80px 1fr;
-    gap: 30px;
-    align-items: start;
-    padding: 30px 0;
-    border-bottom: 1px solid #eee;
-  }
-
-  .step:last-child { border-bottom: none; }
-
-  .step-number {
-    width: 60px;
-    height: 60px;
-    background: var(--orange);
-    color: white;
-    border-radius: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    font-weight: 900;
-    flex-shrink: 0;
-  }
-
-  .step-content h3 {
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--blue);
-    margin-bottom: 8px;
-    margin-top: 10px;
-  }
-
-  .step-content p {
-    font-size: 16px;
-    color: var(--text-light);
-    line-height: 1.7;
-  }
-
-  /* DOWNLOAD CTA */
-  .download-cta {
-    padding: 100px 40px;
-    background: linear-gradient(135deg, #0A1628 0%, #1A3A6B 100%);
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .download-cta::before {
-    content: '🚗';
-    position: absolute;
-    font-size: 300px;
-    opacity: 0.04;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .download-cta h2 {
-    font-size: 48px;
-    font-weight: 900;
-    color: var(--white);
-    margin-bottom: 16px;
-    position: relative;
-  }
-
-  .download-cta p {
-    font-size: 18px;
-    color: rgba(255,255,255,0.7);
-    margin-bottom: 40px;
-    position: relative;
-  }
-
-  .cta-buttons {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
-    position: relative;
-  }
-
-  .btn-cta {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 18px 36px;
-    border-radius: 16px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 18px;
-    transition: all 0.3s;
-  }
-
-  .btn-cta-android {
-    background: var(--orange);
-    color: white;
-  }
-
-  .btn-cta-ios {
-    background: white;
-    color: var(--blue);
-  }
-
-  .btn-cta:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 40px rgba(0,0,0,0.3);
-  }
-
-  /* CONTACT */
-  .contact {
-    padding: 100px 40px;
-    background: var(--gray);
-  }
-
-  .contact-inner {
-    max-width: 600px;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  .contact-inner h2 {
-    font-size: 36px;
-    font-weight: 900;
-    color: var(--blue);
-    margin-bottom: 16px;
-  }
-
-  .contact-inner p {
-    font-size: 16px;
-    color: var(--text-light);
-    margin-bottom: 40px;
-    line-height: 1.7;
-  }
-
-  .contact-card {
-    background: white;
-    border-radius: 24px;
-    padding: 40px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-  }
-
-  .contact-item {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 16px 0;
-    border-bottom: 1px solid #eee;
-    text-align: right;
-  }
-
-  .contact-item:last-child { border-bottom: none; }
-
-  .contact-item-icon {
-    width: 48px;
-    height: 48px;
-    background: #FFF3E8;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    flex-shrink: 0;
-  }
-
-  .contact-item-text {
-    flex: 1;
-  }
-
-  .contact-item-text span {
-    display: block;
-    font-size: 13px;
-    color: var(--text-light);
-    margin-bottom: 2px;
-  }
-
-  .contact-item-text a, .contact-item-text strong {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--blue);
-    text-decoration: none;
-  }
-
-  .contact-item-text a:hover { color: var(--orange); }
-
-  /* PRIVACY */
-  .privacy {
-    padding: 80px 40px;
-    background: white;
-  }
-
-  .privacy-inner {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .privacy-inner h2 {
-    font-size: 32px;
-    font-weight: 900;
-    color: var(--blue);
-    margin-bottom: 24px;
-  }
-
-  .privacy-inner p {
-    font-size: 15px;
-    color: var(--text-light);
-    line-height: 1.8;
-    margin-bottom: 16px;
-  }
-
-  .privacy-inner h3 {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--text);
-    margin: 24px 0 12px;
-  }
-
-  /* FOOTER */
-  footer {
-    background: #0A1628;
-    color: rgba(255,255,255,0.5);
-    text-align: center;
-    padding: 30px 40px;
-    font-size: 14px;
-  }
-
-  footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
-  footer a:hover { color: var(--orange); }
-
-  /* RESPONSIVE */
-  @media (max-width: 768px) {
-    nav { padding: 14px 20px; }
-    .nav-links { display: none; }
-    .hero { padding: 100px 20px 60px; }
-    .hero-content { grid-template-columns: 1fr; gap: 40px; }
-    .hero-text h1 { font-size: 40px; }
-    .hero-phone { order: -1; }
-    .phone-mockup { width: 200px; }
-    .features, .screenshots, .how-it-works, .download-cta, .contact, .privacy { padding: 60px 20px; }
-    .features-grid, .screenshots-grid { grid-template-columns: 1fr; }
-    .section-title h2 { font-size: 30px; }
-    .download-cta h2 { font-size: 32px; }
-  }
+:root{--orange:#FF6B00;--orange-light:#FF8C35;--blue:#1A3A6B;--yellow:#FFD000;--white:#FFF;--gray:#F5F5F5;--gray2:#E8E8E8;--text:#1A1A1A;--text-light:#666;--success:#22C55E;--error:#EF4444}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Heebo',sans-serif;background:#fff;color:var(--text);overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(0,0,0,0.08)}
+.nav-logo{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:900;color:var(--blue);cursor:pointer}
+.nav-actions{display:flex;gap:12px;align-items:center}
+.btn{padding:10px 22px;border-radius:12px;border:none;cursor:pointer;font-family:'Heebo',sans-serif;font-size:15px;font-weight:600;transition:all .2s}
+.btn-primary{background:var(--orange);color:white}.btn-primary:hover{background:var(--orange-light);transform:translateY(-1px)}
+.btn-secondary{background:var(--gray);color:var(--text)}.btn-secondary:hover{background:var(--gray2)}
+.btn-outline{background:transparent;color:var(--blue);border:2px solid var(--blue)}.btn-outline:hover{background:var(--blue);color:white}
+.btn-success{background:var(--success);color:white}
+.btn-lg{padding:14px 32px;font-size:17px;border-radius:14px}
+.btn-full{width:100%}
+.plate-badge{background:var(--yellow);color:var(--text);padding:4px 12px;border-radius:8px;font-weight:700;font-size:14px}
+.page{display:none}.page.active{display:block}
+
+/* HERO */
+#page-landing{min-height:100vh;background:linear-gradient(135deg,#0A1628 0%,#1A3A6B 50%,#0F2447 100%);display:flex;align-items:center;padding:100px 40px 0;position:relative;overflow:hidden;flex-direction:column}
+.hero-content{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1}
+.hero-text h1{font-size:58px;font-weight:900;color:white;line-height:1.1;margin-bottom:20px}
+.hero-text h1 span{color:var(--orange)}
+.hero-text p{font-size:18px;color:rgba(255,255,255,0.75);line-height:1.7;margin-bottom:36px}
+.hero-buttons{display:flex;gap:14px;flex-wrap:wrap}
+.btn-hero-register{background:var(--orange);color:white;padding:16px 36px;border-radius:14px;font-size:18px;font-weight:700;border:none;cursor:pointer;transition:all .3s}
+.btn-hero-register:hover{background:var(--orange-light);transform:translateY(-3px);box-shadow:0 12px 30px rgba(255,107,0,0.4)}
+.btn-hero-login{background:rgba(255,255,255,0.1);color:white;border:2px solid rgba(255,255,255,0.3);padding:16px 36px;border-radius:14px;font-size:18px;font-weight:700;cursor:pointer;transition:all .3s}
+.btn-hero-login:hover{background:rgba(255,255,255,0.2);transform:translateY(-3px)}
+.phone-mockup{width:260px;background:#111;border-radius:40px;padding:10px;box-shadow:0 40px 80px rgba(0,0,0,0.5);animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+.phone-screen{background:white;border-radius:30px;aspect-ratio:9/19;padding:16px 12px;display:flex;flex-direction:column;gap:6px}
+.mock-logo{text-align:center;font-size:28px;margin-bottom:4px}
+.mock-title{font-size:10px;font-weight:700;text-align:center;color:var(--text)}
+.mock-plate{background:var(--yellow);border-radius:6px;padding:6px 8px;display:flex;align-items:center;gap:4px;margin-top:2px}
+.mock-flag{background:#003399;color:white;font-size:5px;font-weight:bold;padding:2px 3px;border-radius:2px;text-align:center;line-height:1.3}
+.mock-text{font-size:8px;font-weight:800;flex:1;text-align:center}
+
+/* FEATURES */
+.features-section{padding:80px 40px;background:white}
+.section-title{text-align:center;margin-bottom:50px}
+.section-title h2{font-size:38px;font-weight:900;color:var(--blue);margin-bottom:12px}
+.section-title p{font-size:17px;color:var(--text-light)}
+.features-grid{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.feature-card{background:var(--gray);border-radius:20px;padding:30px 24px;transition:all .3s}
+.feature-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,0,0,0.1)}
+.feature-icon{font-size:36px;margin-bottom:16px}
+.feature-card h3{font-size:18px;font-weight:700;color:var(--blue);margin-bottom:8px}
+.feature-card p{font-size:14px;color:var(--text-light);line-height:1.6}
+
+/* AUTH */
+.auth-page{min-height:100vh;padding-top:80px;background:linear-gradient(180deg,#F8F9FF 0%,#EEF2FF 100%);display:flex;align-items:center;justify-content:center}
+.auth-card{background:white;border-radius:24px;padding:48px 40px;width:100%;max-width:460px;box-shadow:0 20px 60px rgba(0,0,0,0.1);margin:20px}
+.auth-card h2{font-size:28px;font-weight:900;color:var(--blue);margin-bottom:8px;text-align:center}
+.subtitle{font-size:15px;color:var(--text-light);text-align:center;margin-bottom:32px}
+.form-group{margin-bottom:18px}
+.form-group label{display:block;font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px}
+.form-group input{width:100%;padding:12px 16px;border:2px solid var(--gray2);border-radius:12px;font-family:'Heebo',sans-serif;font-size:15px;color:var(--text);transition:border-color .2s;text-align:right}
+.form-group input:focus{outline:none;border-color:var(--orange)}
+.auth-divider{text-align:center;margin:20px 0;font-size:14px;color:var(--text-light)}
+.auth-link{color:var(--orange);cursor:pointer;font-weight:600}
+.auth-link:hover{text-decoration:underline}
+.alert{padding:12px 16px;border-radius:10px;font-size:14px;margin-bottom:16px;display:none}
+.alert.show{display:block}
+.alert-error{background:#FEE2E2;color:#DC2626;border:1px solid #FECACA}
+.alert-success{background:#DCFCE7;color:#16A34A;border:1px solid #BBF7D0}
+.alert-info{background:#DBEAFE;color:#1D4ED8;border:1px solid #BFDBFE}
+.otp-input{width:100%;padding:16px;font-size:28px;font-weight:700;text-align:center;letter-spacing:12px;border:2px solid var(--gray2);border-radius:14px;font-family:'Heebo',sans-serif}
+.otp-input:focus{outline:none;border-color:var(--orange)}
+.terms-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:20px;font-size:13px;color:var(--text-light);line-height:1.5}
+.terms-row input[type=checkbox]{width:18px;height:18px;margin-top:1px;flex-shrink:0;cursor:pointer}
+
+/* APP */
+#page-app{min-height:100vh;padding-top:70px;background:#F8F9FC}
+.app-container{max-width:800px;margin:0 auto;padding:30px 20px}
+.app-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.app-header h2{font-size:24px;font-weight:900;color:var(--blue)}
+.app-tabs{display:flex;gap:4px;background:var(--gray);border-radius:14px;padding:4px;margin-bottom:24px}
+.tab-btn{flex:1;padding:10px;border:none;background:transparent;border-radius:10px;font-family:'Heebo',sans-serif;font-size:14px;font-weight:600;cursor:pointer;color:var(--text-light);transition:all .2s}
+.tab-btn.active{background:white;color:var(--blue);box-shadow:0 2px 8px rgba(0,0,0,0.1)}
+.tab-content{display:none}.tab-content.active{display:block}
+.send-card,.messages-card{background:white;border-radius:20px;padding:28px;box-shadow:0 4px 20px rgba(0,0,0,0.06);margin-bottom:24px}
+.send-card h3,.messages-card h3{font-size:18px;font-weight:700;color:var(--blue);margin-bottom:20px}
+.plate-input{width:100%;padding:14px 20px;border:2px solid var(--gray2);border-radius:14px;font-size:20px;font-weight:700;text-align:center;letter-spacing:4px;font-family:'Heebo',sans-serif;transition:border-color .2s;margin-bottom:16px}
+.plate-input:focus{outline:none;border-color:var(--orange)}
+.quick-signals{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
+.signal-btn{background:var(--yellow);border:none;border-radius:12px;padding:12px 16px;font-family:'Heebo',sans-serif;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all .2s;color:var(--text)}
+.signal-btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(255,208,0,0.4)}
+.signal-flag{background:#003399;color:white;font-size:8px;font-weight:bold;padding:2px 4px;border-radius:3px;line-height:1.3;white-space:nowrap}
+.custom-msg-row{display:flex;gap:10px}
+.custom-msg-input{flex:1;padding:12px 16px;border:2px solid var(--gray2);border-radius:12px;font-family:'Heebo',sans-serif;font-size:15px;transition:border-color .2s;text-align:right}
+.custom-msg-input:focus{outline:none;border-color:var(--orange)}
+.msg-count{background:var(--orange);color:white;font-size:12px;font-weight:700;padding:2px 8px;border-radius:20px}
+.message-item{padding:16px;border-radius:14px;background:var(--gray);margin-bottom:12px;transition:background .2s;cursor:pointer}
+.message-item:hover{background:var(--gray2)}
+.message-item.unread{background:#FFF8EE;border-right:3px solid var(--orange)}
+.msg-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.msg-plate{font-size:15px;font-weight:700;color:var(--blue)}
+.msg-time{font-size:12px;color:var(--text-light)}
+.msg-text{font-size:14px;color:var(--text)}
+.msg-direction{font-size:11px;color:var(--text-light);margin-top:4px}
+.empty-state{text-align:center;padding:40px 20px;color:var(--text-light)}
+.empty-state .empty-icon{font-size:48px;margin-bottom:12px}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:200;align-items:center;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal{background:white;border-radius:24px;width:100%;max-width:500px;max-height:80vh;display:flex;flex-direction:column;margin:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.2)}
+.modal-header{padding:20px 24px;border-bottom:1px solid var(--gray2);display:flex;align-items:center;justify-content:space-between}
+.modal-header h3{font-size:18px;font-weight:700;color:var(--blue)}
+.modal-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-light);padding:4px 8px}
+.modal-body{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:10px}
+.chat-bubble{max-width:75%;padding:10px 14px;border-radius:16px;font-size:14px;line-height:1.5}
+.chat-bubble.sent{background:var(--orange);color:white;align-self:flex-start;border-bottom-right-radius:4px}
+.chat-bubble.received{background:var(--gray);color:var(--text);align-self:flex-end;border-bottom-left-radius:4px}
+.bubble-time{font-size:11px;opacity:.7;margin-top:4px}
+.modal-footer{padding:16px 20px;border-top:1px solid var(--gray2);display:flex;gap:10px}
+.modal-input{flex:1;padding:10px 14px;border:2px solid var(--gray2);border-radius:12px;font-family:'Heebo',sans-serif;font-size:14px;text-align:right}
+.modal-input:focus{outline:none;border-color:var(--orange)}
+
+/* DOWNLOAD */
+.download-section{padding:80px 40px;background:linear-gradient(135deg,#0A1628 0%,#1A3A6B 100%);text-align:center}
+.download-section h2{font-size:40px;font-weight:900;color:white;margin-bottom:12px}
+.download-section p{font-size:17px;color:rgba(255,255,255,0.7);margin-bottom:36px}
+.download-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-download{display:flex;align-items:center;gap:12px;padding:16px 32px;border-radius:14px;text-decoration:none;font-weight:700;font-size:17px;transition:all .3s;font-family:'Heebo',sans-serif}
+.btn-dl-android{background:var(--orange);color:white}
+.btn-dl-ios{background:white;color:var(--blue)}
+.btn-download:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,0.3)}
+
+/* SIMPLE SECTIONS */
+.simple-section{padding:70px 40px;background:var(--gray)}
+.simple-inner{max-width:700px;margin:0 auto}
+.simple-inner h2{font-size:30px;font-weight:900;color:var(--blue);margin-bottom:20px}
+.simple-inner p{font-size:15px;color:var(--text-light);line-height:1.8;margin-bottom:14px}
+.simple-inner h3{font-size:17px;font-weight:700;color:var(--text);margin:20px 0 8px}
+.simple-inner a{color:var(--orange)}
+footer{background:#0A1628;color:rgba(255,255,255,0.5);text-align:center;padding:24px;font-size:14px}
+footer a{color:rgba(255,255,255,0.7);text-decoration:none;margin:0 8px}
+footer a:hover{color:var(--orange)}
+
+@media(max-width:768px){
+  nav{padding:12px 16px}
+  #page-landing{padding:90px 20px 0}
+  .hero-content{grid-template-columns:1fr;gap:30px}
+  .hero-text h1{font-size:36px}
+  .hero-phone{order:-1;display:flex;justify-content:center}
+  .phone-mockup{width:200px}
+  .features-section,.download-section,.simple-section{padding:50px 20px}
+  .features-grid{grid-template-columns:1fr}
+  .quick-signals{grid-template-columns:1fr}
+  .auth-card{padding:32px 24px}
+}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
-  <div class="nav-logo">
-    <span>🚗</span>
-    <span>איתותים</span>
+  <div class="nav-logo" onclick="showPage('landing')">🚗 איתותים</div>
+  <div id="nav-actions-guest" class="nav-actions">
+    <button class="btn btn-secondary" onclick="showPage('login')">התחברות</button>
+    <button class="btn btn-primary" onclick="showPage('register')">הרשמה</button>
   </div>
-  <ul class="nav-links">
-    <li><a href="#features">יתרונות</a></li>
-    <li><a href="#how">איך זה עובד</a></li>
-    <li><a href="#download">הורדה</a></li>
-    <li><a href="#contact">צור קשר</a></li>
-    <li><a href="#privacy">פרטיות</a></li>
-  </ul>
+  <div id="nav-actions-user" class="nav-actions" style="display:none">
+    <span style="font-size:14px;color:var(--text-light)">לוחית:</span>
+    <span class="plate-badge" id="nav-plate">---</span>
+    <button class="btn btn-secondary" onclick="showPage('app')">האפליקציה</button>
+    <button class="btn btn-outline" onclick="logout()">יציאה</button>
+  </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
+<!-- LANDING -->
+<div id="page-landing" class="page active">
   <div class="hero-content">
     <div class="hero-text">
       <h1>תקשורת בין נהגים — <span>בקלות</span></h1>
       <p>שלח הודעה לכל נהג על הכביש רק עם מספר הלוחית שלו. ללא שיתוף מספר טלפון.</p>
-      <div class="download-buttons">
-        <a href="https://play.google.com/store" class="btn-download btn-android" id="android-link">
-          <span class="btn-icon">▶</span>
-          <div>
-            <div style="font-size:11px;font-weight:400;opacity:0.85">הורד מ-</div>
-            <div>Google Play</div>
-          </div>
-        </a>
-        <a href="https://apps.apple.com" class="btn-download btn-ios" id="ios-link">
-          <span class="btn-icon">🍎</span>
-          <div>
-            <div style="font-size:11px;font-weight:400;opacity:0.85">הורד מ-</div>
-            <div>App Store</div>
-          </div>
-        </a>
+      <div class="hero-buttons">
+        <button class="btn-hero-register" onclick="showPage('register')">הרשמה חינמית</button>
+        <button class="btn-hero-login" onclick="showPage('login')">כניסה</button>
       </div>
     </div>
     <div class="hero-phone">
       <div class="phone-mockup">
         <div class="phone-screen">
-          <div class="phone-screen-content">
-            <div class="app-logo-preview">🚗</div>
-            <div class="screen-title">ברוכים הבאים לאיתותים</div>
-            <div style="font-size:9px;color:#888;margin-bottom:8px">שלח איתות לכל נהג</div>
-            <div class="plate-card">
-              <div class="plate-flag">★<br>IL</div>
-              <div class="plate-text">שיחקת-אותה 👑</div>
-            </div>
-            <div class="plate-card">
-              <div class="plate-flag">★<br>IL</div>
-              <div class="plate-text">מפנה-מקום 🅿️</div>
-            </div>
-            <div class="plate-card">
-              <div class="plate-flag">★<br>IL</div>
-              <div class="plate-text">זהירות ❕</div>
-            </div>
-            <div class="plate-card">
-              <div class="plate-flag">★<br>IL</div>
-              <div class="plate-text">יום-זהב ✨</div>
-            </div>
-          </div>
+          <div class="mock-logo">🚗</div>
+          <div class="mock-title">ברוכים הבאים לאיתותים</div>
+          <div class="mock-plate"><div class="mock-flag">★<br>IL</div><div class="mock-text">שיחקת-אותה 👑</div></div>
+          <div class="mock-plate"><div class="mock-flag">★<br>IL</div><div class="mock-text">מפנה-מקום 🅿️</div></div>
+          <div class="mock-plate"><div class="mock-flag">★<br>IL</div><div class="mock-text">זהירות ❕</div></div>
+          <div class="mock-plate"><div class="mock-flag">★<br>IL</div><div class="mock-text">יום-זהב ✨</div></div>
         </div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- FEATURES -->
-<section class="features" id="features">
-  <div class="section-title">
-    <h2>למה איתותים?</h2>
-    <p>הדרך הכי פשוטה לתקשר עם נהגים אחרים</p>
-  </div>
-  <div class="features-grid">
-    <div class="feature-card">
-      <span class="feature-icon">🚗</span>
-      <h3>לפי מספר לוחית</h3>
-      <p>שלח הודעה לכל רכב רשום — רק צריך את מספר הלוחית. פשוט וישיר.</p>
-    </div>
-    <div class="feature-card">
-      <span class="feature-icon">🔔</span>
-      <h3>התראות בזמן אמת</h3>
-      <p>קבל התראות מיידיות כשמישהו שולח לך איתות — אפילו כשהאפליקציה סגורה.</p>
-    </div>
-    <div class="feature-card">
-      <span class="feature-icon">🔒</span>
-      <h3>פרטיות מלאה</h3>
-      <p>ללא שיתוף מספר טלפון. הזהות שלך מוגנת — רק מספר הרכב גלוי.</p>
-    </div>
-    <div class="feature-card">
-      <span class="feature-icon">⚡</span>
-      <h3>הודעות מהירות</h3>
-      <p>בחר מרשימת איתותים מוכנים — שחקת אותה, מפנה מקום, זהירות ועוד.</p>
-    </div>
-    <div class="feature-card">
-      <span class="feature-icon">💬</span>
-      <h3>הודעה חופשית</h3>
-      <p>רוצה להגיד משהו ספציפי? כתוב הודעה חופשית לכל נהג.</p>
-    </div>
-    <div class="feature-card">
-      <span class="feature-icon">📱</span>
-      <h3>iOS ו-Android</h3>
-      <p>זמין לכולם — iPhone ו-Android. אותה חוויה, אותה נוחות.</p>
+  <div class="features-section">
+    <div class="section-title"><h2>למה איתותים?</h2><p>הדרך הכי פשוטה לתקשר עם נהגים</p></div>
+    <div class="features-grid">
+      <div class="feature-card"><div class="feature-icon">🚗</div><h3>לפי מספר לוחית</h3><p>שלח הודעה לכל רכב רשום — רק צריך את מספר הלוחית.</p></div>
+      <div class="feature-card"><div class="feature-icon">🔔</div><h3>התראות מיידיות</h3><p>קבל התראות בזמן אמת כשמישהו שולח לך איתות.</p></div>
+      <div class="feature-card"><div class="feature-icon">🔒</div><h3>פרטיות מלאה</h3><p>ללא שיתוף מספר טלפון. רק מספר הרכב גלוי.</p></div>
     </div>
   </div>
-</section>
 
-<!-- SCREENSHOTS -->
-<section class="screenshots" id="screenshots">
-  <div class="section-title">
-    <h2>צילומי מסך</h2>
-    <p>ממשק נקי ופשוט לשימוש</p>
-  </div>
-  <div class="screenshots-grid">
-    <div class="screenshot-frame">
-      <div class="screenshot-placeholder">
-        <span class="ss-icon">📱</span>
-        <span>מסך הרשמה</span>
-      </div>
-    </div>
-    <div class="screenshot-frame">
-      <div class="screenshot-placeholder">
-        <span class="ss-icon">🚗</span>
-        <span>מסך ראשי</span>
-      </div>
-    </div>
-    <div class="screenshot-frame">
-      <div class="screenshot-placeholder">
-        <span class="ss-icon">💬</span>
-        <span>מסך שיחות</span>
-      </div>
+  <div class="download-section">
+    <h2>הורד את האפליקציה</h2>
+    <p>חוויה מלאה עם התראות Push</p>
+    <div class="download-btns">
+      <a href="#" class="btn-download btn-dl-android">▶ Google Play</a>
+      <a href="#" class="btn-download btn-dl-ios">🍎 App Store</a>
     </div>
   </div>
-</section>
 
-<!-- HOW IT WORKS -->
-<section class="how-it-works" id="how">
-  <div class="section-title">
-    <h2>איך זה עובד?</h2>
-    <p>שלושה צעדים פשוטים</p>
-  </div>
-  <div class="steps">
-    <div class="step">
-      <div class="step-number">1</div>
-      <div class="step-content">
-        <h3>הירשם עם מספר הרכב שלך</h3>
-        <p>הזן את מספר הלוחית שלך, מספר טלפון לאימות, ואימייל. האימות מתבצע בקוד SMS.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-number">2</div>
-      <div class="step-content">
-        <h3>הזן מספר רכב ושלח איתות</h3>
-        <p>הזן את מספר הלוחית של הרכב שאליו תרצה לפנות, בחר איתות מוכן או כתוב הודעה חופשית.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-number">3</div>
-      <div class="step-content">
-        <h3>הנהג מקבל התראה מיידית</h3>
-        <p>הנהג מקבל push notification עם ההודעה שלך, ויכול להגיב בחזרה.</p>
-      </div>
+  <div class="simple-section" id="contact">
+    <div class="simple-inner">
+      <h2>צור קשר</h2>
+      <p>📧 <a href="mailto:Autochat1000@gmail.com">Autochat1000@gmail.com</a></p>
     </div>
   </div>
-</section>
 
-<!-- DOWNLOAD CTA -->
-<section class="download-cta" id="download">
-  <h2>הורד עכשיו — חינם!</h2>
-  <p>זמין ל-Android ול-iPhone</p>
-  <div class="cta-buttons">
-    <a href="https://play.google.com/store" class="btn-cta btn-cta-android" id="android-link-2">
-      <span style="font-size:28px">▶</span>
-      <div style="text-align:right">
-        <div style="font-size:12px;font-weight:400;opacity:0.85">הורד מ-</div>
-        <div>Google Play</div>
-      </div>
-    </a>
-    <a href="https://apps.apple.com" class="btn-cta btn-cta-ios" id="ios-link-2">
-      <span style="font-size:28px">🍎</span>
-      <div style="text-align:right">
-        <div style="font-size:12px;font-weight:400;opacity:0.6">הורד מ-</div>
-        <div>App Store</div>
-      </div>
-    </a>
+  <div class="simple-section" id="privacy" style="background:white">
+    <div class="simple-inner">
+      <h2>מדיניות פרטיות</h2>
+      <h3>מידע שאנו אוספים</h3>
+      <p>האפליקציה אוספת מספר רכב, מספר טלפון ואימייל בעת ההרשמה לצורך אימות זהות ותקשורת.</p>
+      <h3>שימוש במידע</h3>
+      <p>המידע משמש לצורך הפעלת שירות האיתותים בלבד. לא נמכור את המידע לצדדים שלישיים.</p>
+      <h3>יצירת קשר</h3>
+      <p><a href="mailto:Autochat1000@gmail.com">Autochat1000@gmail.com</a></p>
+    </div>
   </div>
-</section>
+  <footer><p>© 2026 איתותים | <a href="#" onclick="scrollToSection('privacy')">מדיניות פרטיות</a> | <a href="#" onclick="scrollToSection('contact')">צור קשר</a></p></footer>
+</div>
 
-<!-- CONTACT -->
-<section class="contact" id="contact">
-  <div class="contact-inner">
-    <h2>צור קשר ותמיכה</h2>
-    <p>שאלות? בעיות? אנחנו כאן בשבילך</p>
-    <div class="contact-card">
-      <div class="contact-item">
-        <div class="contact-item-icon">📧</div>
-        <div class="contact-item-text">
-          <span>אימייל תמיכה</span>
-          <a href="mailto:Autochat1000@gmail.com">Autochat1000@gmail.com</a>
+<!-- REGISTER -->
+<div id="page-register" class="page auth-page">
+  <div class="auth-card">
+    <div style="text-align:center;font-size:40px;margin-bottom:12px">🚗</div>
+    <h2>הרשמה לאיתותים</h2>
+    <p class="subtitle">צור חשבון חינמי עם מספר הרכב שלך</p>
+    <div id="reg-alert" class="alert"></div>
+    <div id="reg-step1">
+      <div class="form-group"><label>מספר לוחית רכב</label><input type="number" id="reg-plate" placeholder="לדוגמה: 1234567"></div>
+      <div class="form-group"><label>מספר טלפון</label><input type="tel" id="reg-phone" placeholder="לדוגמה: 0501234567"></div>
+      <div class="form-group"><label>אימייל</label><input type="email" id="reg-email" placeholder="your@email.com"></div>
+      <div class="terms-row">
+        <input type="checkbox" id="reg-terms">
+        <label for="reg-terms">אני מאשר את תנאי השימוש וכי מספר הלוחית שרשמתי הוא שלי</label>
+      </div>
+      <button class="btn btn-primary btn-full btn-lg" onclick="registerStep1()">שלח קוד אימות ב-SMS</button>
+    </div>
+    <div id="reg-step2" style="display:none">
+      <p style="font-size:15px;color:var(--text-light);text-align:center;margin-bottom:20px">הזן את קוד האימות שנשלח אליך ב-SMS</p>
+      <div class="form-group"><input type="number" class="otp-input" id="reg-otp" placeholder="------" maxlength="6"></div>
+      <button class="btn btn-success btn-full btn-lg" onclick="registerStep2()" style="margin-bottom:12px">אמת והמשך</button>
+      <button class="btn btn-secondary btn-full" onclick="backToStep1()">חזור</button>
+    </div>
+    <div class="auth-divider">כבר יש לך חשבון? <span class="auth-link" onclick="showPage('login')">התחבר כאן</span></div>
+  </div>
+  <div id="recaptcha-container"></div>
+</div>
+
+<!-- LOGIN -->
+<div id="page-login" class="page auth-page">
+  <div class="auth-card">
+    <div style="text-align:center;font-size:40px;margin-bottom:12px">🚗</div>
+    <h2>כניסה לאיתותים</h2>
+    <p class="subtitle">הכנס עם מספר הטלפון שלך</p>
+    <div id="login-alert" class="alert"></div>
+    <div id="login-step1">
+      <div class="form-group"><label>מספר טלפון</label><input type="tel" id="login-phone" placeholder="לדוגמה: 0501234567"></div>
+      <button class="btn btn-primary btn-full btn-lg" onclick="loginStep1()">שלח קוד אימות</button>
+    </div>
+    <div id="login-step2" style="display:none">
+      <p style="font-size:15px;color:var(--text-light);text-align:center;margin-bottom:20px">הזן את קוד האימות שנשלח אליך ב-SMS</p>
+      <div class="form-group"><input type="number" class="otp-input" id="login-otp" placeholder="------" maxlength="6"></div>
+      <button class="btn btn-success btn-full btn-lg" onclick="loginStep2()" style="margin-bottom:12px">אמת וכנס</button>
+      <button class="btn btn-secondary btn-full" onclick="backToLoginStep1()">חזור</button>
+    </div>
+    <div class="auth-divider">אין לך חשבון? <span class="auth-link" onclick="showPage('register')">הרשם כאן</span></div>
+  </div>
+  <div id="recaptcha-login-container"></div>
+</div>
+
+<!-- APP -->
+<div id="page-app" class="page">
+  <div class="app-container">
+    <div class="app-header"><h2>שלום, <span id="app-plate-display">---</span> 👋</h2></div>
+    <div class="app-tabs">
+      <button class="tab-btn active" onclick="switchTab('send',this)">שלח איתות</button>
+      <button class="tab-btn" onclick="switchTab('inbox',this)">📬 הודעות <span id="unread-count" class="msg-count" style="display:none">0</span></button>
+    </div>
+    <div id="tab-send" class="tab-content active">
+      <div class="send-card">
+        <h3>🚗 שלח איתות</h3>
+        <div id="send-alert" class="alert"></div>
+        <input type="number" class="plate-input" id="target-plate" placeholder="מספר לוחית יעד">
+        <div class="quick-signals">
+          <button class="signal-btn" onclick="sendQuickSignal('שיחקת-אותה 👑')"><span class="signal-flag">★<br>IL</span> שיחקת-אותה 👑</button>
+          <button class="signal-btn" onclick="sendQuickSignal('יצאת-קקי 💩')"><span class="signal-flag">★<br>IL</span> יצאת-קקי 💩</button>
+          <button class="signal-btn" onclick="sendQuickSignal('יום-זהב ✨')"><span class="signal-flag">★<br>IL</span> יום-זהב ✨</button>
+          <button class="signal-btn" onclick="sendQuickSignal('משהו-לא-בסדר 🤨')"><span class="signal-flag">★<br>IL</span> משהו-לא-בסדר 🤨</button>
+          <button class="signal-btn" onclick="sendQuickSignal('מפנה-מקום 🅿️')"><span class="signal-flag">★<br>IL</span> מפנה-מקום 🅿️</button>
+          <button class="signal-btn" onclick="sendQuickSignal('זהירות ❕')"><span class="signal-flag">★<br>IL</span> זהירות ❕</button>
         </div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-item-icon">⏰</div>
-        <div class="contact-item-text">
-          <span>זמן תגובה</span>
-          <strong>עד 24 שעות</strong>
+        <div class="custom-msg-row">
+          <input type="text" class="custom-msg-input" id="custom-msg" placeholder="הודעה חופשית...">
+          <button class="btn btn-primary" onclick="sendCustomMessage()">שלח</button>
         </div>
       </div>
     </div>
+    <div id="tab-inbox" class="tab-content">
+      <div class="messages-card">
+        <h3>📬 הודעות <span id="msg-count-display" class="msg-count">0</span></h3>
+        <div id="messages-list"><div class="empty-state"><div class="empty-icon">📭</div><p>אין הודעות עדיין</p></div></div>
+      </div>
+    </div>
   </div>
-</section>
+</div>
 
-<!-- PRIVACY -->
-<section class="privacy" id="privacy">
-  <div class="privacy-inner">
-    <h2>מדיניות פרטיות</h2>
-    <p>עדכון אחרון: מרץ 2026</p>
-
-    <h3>מידע שאנו אוספים</h3>
-    <p>האפליקציה אוספת את הנתונים הבאים בעת ההרשמה: מספר רכב, מספר טלפון ואימייל. מידע זה נדרש לצורך אימות זהותך ואפשרת התקשורת עם נהגים אחרים.</p>
-
-    <h3>שימוש במידע</h3>
-    <p>המידע שנאסף משמש אך ורק לצורך הפעלת שירות האיתותים — זיהוי משתמשים, שליחת התראות ואפשרת תקשורת בין נהגים. לא נמכור או נעביר את המידע לצדדים שלישיים לצרכי פרסום.</p>
-
-    <h3>אבטחת מידע</h3>
-    <p>המידע מאוחסן בשרתי Firebase של Google ומאובטח בתקני הצפנה מתקדמים. מספרי הטלפון משמשים לאימות בלבד.</p>
-
-    <h3>מחיקת חשבון</h3>
-    <p>לבקשת מחיקת החשבון והנתונים שלך, אנא פנה אלינו בכתובת: <a href="mailto:Autochat1000@gmail.com" style="color:var(--orange)">Autochat1000@gmail.com</a></p>
-
-    <h3>יצירת קשר</h3>
-    <p>לכל שאלה בנוגע למדיניות הפרטיות: <a href="mailto:Autochat1000@gmail.com" style="color:var(--orange)">Autochat1000@gmail.com</a></p>
+<!-- Chat Modal -->
+<div id="chat-modal" class="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="chat-modal-title">שיחה</h3>
+      <button class="modal-close" onclick="closeChat()">✕</button>
+    </div>
+    <div class="modal-body" id="chat-messages"></div>
+    <div class="modal-footer">
+      <input type="text" class="modal-input" id="chat-reply-input" placeholder="כתוב הודעה...">
+      <button class="btn btn-primary" onclick="sendReply()">שלח</button>
+    </div>
   </div>
-</section>
+</div>
 
-<!-- FOOTER -->
-<footer>
-  <p>© 2026 איתותים | <a href="#privacy">מדיניות פרטיות</a> | <a href="#contact">צור קשר</a></p>
-</footer>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, collection, doc, getDoc, setDoc, addDoc, query, where, orderBy, onSnapshot, serverTimestamp, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+const app = initializeApp({
+  apiKey:"AIzaSyCu9Aq5qGeNKddWkOLiB61p4kn_wTnyDgY",
+  authDomain:"itutim-app-final.firebaseapp.com",
+  projectId:"itutim-app-final",
+  storageBucket:"itutim-app-final.firebasestorage.app",
+  messagingSenderId:"653690224720",
+  appId:"1:653690224720:web:cf1489c3ff95cc90215155"
+});
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let currentUserPlate = null;
+let confirmationResult = null;
+let loginConfirmationResult = null;
+let currentChatPlate = null;
+let messagesUnsubscribe = null;
+
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    const q = query(collection(db,'users'), where('phone','==',user.phoneNumber));
+    const snap = await getDocs(q);
+    if (!snap.empty) {
+      currentUserPlate = snap.docs[0].id;
+      document.getElementById('nav-actions-guest').style.display = 'none';
+      document.getElementById('nav-actions-user').style.display = 'flex';
+      document.getElementById('nav-plate').textContent = currentUserPlate;
+    }
+  } else {
+    currentUserPlate = null;
+    document.getElementById('nav-actions-guest').style.display = 'flex';
+    document.getElementById('nav-actions-user').style.display = 'none';
+  }
+});
+
+function formatPhone(p){const c=p.replace(/[^0-9]/g,'');if(c.startsWith('0'))return'+972'+c.substring(1);if(c.startsWith('972'))return'+'+c;return'+972'+c}
+function getChatId(a,b){return[a,b].sort().join('_')}
+function formatTime(ts){if(!ts)return'';const d=ts.toDate?ts.toDate():new Date(ts);return d.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'})}
+function showAlert(id,msg,type){const el=document.getElementById(id);el.textContent=msg;el.className='alert alert-'+type+' show'}
+function hideAlert(id){document.getElementById(id).classList.remove('show')}
+
+window.registerStep1 = async function(){
+  const plate=document.getElementById('reg-plate').value.trim();
+  const phone=document.getElementById('reg-phone').value.trim();
+  const email=document.getElementById('reg-email').value.trim();
+  const terms=document.getElementById('reg-terms').checked;
+  if(!plate||plate.length<5)return showAlert('reg-alert','יש להזין מספר לוחית תקין','error');
+  if(!phone||phone.length<9)return showAlert('reg-alert','יש להזין מספר טלפון תקין','error');
+  if(!email)return showAlert('reg-alert','יש להזין אימייל','error');
+  if(!terms)return showAlert('reg-alert','יש לאשר את תנאי השימוש','error');
+  const plateDoc=await getDoc(doc(db,'users',plate));
+  if(plateDoc.exists())return showAlert('reg-alert','מספר הלוחית הזה כבר רשום','error');
+  const fp=formatPhone(phone);
+  try{
+    if(!window.recaptchaVerifier)window.recaptchaVerifier=new RecaptchaVerifier(auth,'recaptcha-container',{size:'invisible'});
+    confirmationResult=await signInWithPhoneNumber(auth,fp,window.recaptchaVerifier);
+    window._regData={plate,phone:fp,email};
+    document.getElementById('reg-step1').style.display='none';
+    document.getElementById('reg-step2').style.display='block';
+    showAlert('reg-alert','קוד אימות נשלח','success');
+  }catch(e){showAlert('reg-alert','שגיאה: '+e.message,'error');window.recaptchaVerifier=null}
+};
+
+window.registerStep2 = async function(){
+  const otp=document.getElementById('reg-otp').value.trim();
+  if(!otp||otp.length!==6)return showAlert('reg-alert','קוד לא תקין','error');
+  try{
+    const result=await confirmationResult.confirm(otp);
+    const{plate,phone,email}=window._regData;
+    await setDoc(doc(db,'users',plate),{uid:result.user.uid,phone,email,isBlocked:false,blockedUsers:[],createdAt:serverTimestamp()});
+    currentUserPlate=plate;
+    document.getElementById('nav-actions-guest').style.display='none';
+    document.getElementById('nav-actions-user').style.display='flex';
+    document.getElementById('nav-plate').textContent=plate;
+    showAppPage();
+  }catch(e){showAlert('reg-alert','קוד שגוי','error')}
+};
+
+window.backToStep1=function(){document.getElementById('reg-step1').style.display='block';document.getElementById('reg-step2').style.display='none';window.recaptchaVerifier=null};
+
+window.loginStep1 = async function(){
+  const phone=document.getElementById('login-phone').value.trim();
+  if(!phone||phone.length<9)return showAlert('login-alert','יש להזין מספר טלפון תקין','error');
+  const fp=formatPhone(phone);
+  try{
+    if(!window.recaptchaLoginVerifier)window.recaptchaLoginVerifier=new RecaptchaVerifier(auth,'recaptcha-login-container',{size:'invisible'});
+    loginConfirmationResult=await signInWithPhoneNumber(auth,fp,window.recaptchaLoginVerifier);
+    document.getElementById('login-step1').style.display='none';
+    document.getElementById('login-step2').style.display='block';
+    showAlert('login-alert','קוד אימות נשלח','success');
+  }catch(e){showAlert('login-alert','שגיאה: '+e.message,'error');window.recaptchaLoginVerifier=null}
+};
+
+window.loginStep2 = async function(){
+  const otp=document.getElementById('login-otp').value.trim();
+  if(!otp||otp.length!==6)return showAlert('login-alert','קוד לא תקין','error');
+  try{
+    const result=await loginConfirmationResult.confirm(otp);
+    const q=query(collection(db,'users'),where('phone','==',result.user.phoneNumber));
+    const snap=await getDocs(q);
+    if(snap.empty){await signOut(auth);return showAlert('login-alert','מספר הטלפון לא רשום. אנא הירשם תחילה.','error')}
+    currentUserPlate=snap.docs[0].id;
+    document.getElementById('nav-actions-guest').style.display='none';
+    document.getElementById('nav-actions-user').style.display='flex';
+    document.getElementById('nav-plate').textContent=currentUserPlate;
+    showAppPage();
+  }catch(e){showAlert('login-alert','קוד שגוי','error')}
+};
+
+window.backToLoginStep1=function(){document.getElementById('login-step1').style.display='block';document.getElementById('login-step2').style.display='none';window.recaptchaLoginVerifier=null};
+
+window.logout = async function(){
+  await signOut(auth);
+  if(messagesUnsubscribe)messagesUnsubscribe();
+  currentUserPlate=null;
+  showPage('landing');
+};
+
+function showAppPage(){
+  showPage('app');
+  document.getElementById('app-plate-display').textContent=currentUserPlate;
+  loadMessages();
+}
+window.showAppPage=showAppPage;
+
+async function sendMessage(targetPlate,text){
+  try{
+    const targetDoc=await getDoc(doc(db,'users',targetPlate));
+    if(!targetDoc.exists())return showAlert('send-alert','מספר הלוחית לא רשום במערכת','error');
+    const chatId=getChatId(currentUserPlate,targetPlate);
+    await addDoc(collection(db,'messages'),{chatId,from:currentUserPlate,to:targetPlate,text,timestamp:serverTimestamp(),read:false});
+    showAlert('send-alert','✅ האיתות נשלח בהצלחה!','success');
+    document.getElementById('target-plate').value='';
+    setTimeout(()=>hideAlert('send-alert'),3000);
+  }catch(e){showAlert('send-alert','שגיאה: '+e.message,'error')}
+}
+
+window.sendQuickSignal=async function(signal){
+  const p=document.getElementById('target-plate').value.trim();
+  if(!p)return showAlert('send-alert','יש להזין מספר לוחית','error');
+  if(p===currentUserPlate)return showAlert('send-alert','לא ניתן לשלוח לעצמך','error');
+  await sendMessage(p,signal);
+};
+
+window.sendCustomMessage=async function(){
+  const p=document.getElementById('target-plate').value.trim();
+  const msg=document.getElementById('custom-msg').value.trim();
+  if(!p)return showAlert('send-alert','יש להזין מספר לוחית','error');
+  if(!msg)return showAlert('send-alert','יש להזין הודעה','error');
+  if(p===currentUserPlate)return showAlert('send-alert','לא ניתן לשלוח לעצמך','error');
+  await sendMessage(p,msg);
+  document.getElementById('custom-msg').value='';
+};
+
+function loadMessages(){
+  if(!currentUserPlate)return;
+  if(messagesUnsubscribe)messagesUnsubscribe();
+  const q=query(collection(db,'messages'),where('to','==',currentUserPlate),orderBy('timestamp','desc'));
+  messagesUnsubscribe=onSnapshot(q,(snap)=>{
+    const seen={};const msgs=[];
+    snap.docs.forEach(d=>{const data={id:d.id,...d.data()};if(!seen[data.from]){seen[data.from]=data;msgs.push(data)}});
+    renderMessages(msgs);
+  });
+}
+window.loadMessages=loadMessages;
+
+function renderMessages(messages){
+  const list=document.getElementById('messages-list');
+  const unread=messages.filter(m=>!m.read).length;
+  document.getElementById('msg-count-display').textContent=messages.length;
+  const uc=document.getElementById('unread-count');
+  uc.textContent=unread;uc.style.display=unread>0?'inline':'none';
+  if(!messages.length){list.innerHTML='<div class="empty-state"><div class="empty-icon">📭</div><p>אין הודעות עדיין</p></div>';return}
+  list.innerHTML=messages.map(msg=>`<div class="message-item ${!msg.read?'unread':''}" onclick="openChat('${msg.from}')"><div class="msg-header"><span class="msg-plate">🚗 ${msg.from}</span><span class="msg-time">${formatTime(msg.timestamp)}</span></div><div class="msg-text">${msg.text}</div></div>`).join('');
+}
+
+window.openChat=async function(otherPlate){
+  currentChatPlate=otherPlate;
+  document.getElementById('chat-modal-title').textContent='שיחה עם '+otherPlate;
+  document.getElementById('chat-modal').classList.add('show');
+  const chatId=getChatId(currentUserPlate,otherPlate);
+  const q=query(collection(db,'messages'),where('chatId','==',chatId),orderBy('timestamp','asc'));
+  const snap=await getDocs(q);
+  const chatEl=document.getElementById('chat-messages');
+  chatEl.innerHTML='';
+  snap.docs.forEach(d=>{
+    const data=d.data();const isSent=data.from===currentUserPlate;
+    const div=document.createElement('div');
+    div.className='chat-bubble '+(isSent?'sent':'received');
+    div.innerHTML=data.text+'<div class="bubble-time">'+formatTime(data.timestamp)+'</div>';
+    chatEl.appendChild(div);
+  });
+  chatEl.scrollTop=chatEl.scrollHeight;
+};
+
+window.closeChat=function(){document.getElementById('chat-modal').classList.remove('show');currentChatPlate=null};
+
+window.sendReply=async function(){
+  const text=document.getElementById('chat-reply-input').value.trim();
+  if(!text||!currentChatPlate)return;
+  await sendMessage(currentChatPlate,text);
+  document.getElementById('chat-reply-input').value='';
+  window.openChat(currentChatPlate);
+};
+</script>
+
+<script>
+function showPage(name){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('page-'+name).classList.add('active');window.scrollTo(0,0);if(name==='app'&&window.loadMessages)window.loadMessages()}
+function scrollToSection(id){showPage('landing');setTimeout(()=>document.getElementById(id).scrollIntoView({behavior:'smooth'}),100)}
+function switchTab(tab,btn){document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));document.getElementById('tab-'+tab).classList.add('active');if(btn)btn.classList.add('active')}
+window.showPage=showPage;window.scrollToSection=scrollToSection;window.switchTab=switchTab;
+</script>
 </body>
 </html>
