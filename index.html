@@ -457,12 +457,22 @@ window._initLoginRecaptcha = function() {
   } catch(e) { console.error('login recaptcha:', e); }
 };
 
-// אתחול אוטומטי כשהדף נטען — שניהם גלויים בדף
+// אתחול reCAPTCHA כשהקונטיינר נכנס לתצוגה
+function observeAndInit(containerId, initFn) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      setTimeout(initFn, 200);
+      observer.disconnect();
+    }
+  }, {threshold: 0.1});
+  observer.observe(el);
+}
+
 window.addEventListener('load', () => {
-  setTimeout(() => {
-    window._initRegRecaptcha();
-    window._initLoginRecaptcha();
-  }, 600);
+  observeAndInit('recaptcha-container', () => window._initRegRecaptcha());
+  observeAndInit('recaptcha-login-container', () => window._initLoginRecaptcha());
 });
 
 onAuthStateChanged(auth, async (user) => {
