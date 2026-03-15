@@ -668,4 +668,16 @@ window.openChat = async function(otherPlate) {
   });
 };
 
-window.closeChat = function() { document.getElementById('c
+window.closeChat = function() { document.getElementById('chat-modal').classList.remove('show'); currentChatPlate = null; };
+
+window.sendReply = async function() {
+  const text = document.getElementById('chat-reply-input').value.trim();
+  if (!text || !currentChatPlate) return;
+  await sendMessage(currentChatPlate, text);
+  document.getElementById('chat-reply-input').value = '';
+  window.openChat(currentChatPlate);
+};
+</script>
+
+</body>
+</html>
