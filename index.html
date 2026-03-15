@@ -398,7 +398,7 @@ window.registerStep1 = async function(){
   if(plateDoc.exists())return showAlert('reg-alert','מספר הלוחית הזה כבר רשום','error');
   const fp=formatPhone(phone);
   try{
-    if(!window.recaptchaVerifier)window.recaptchaVerifier=new RecaptchaVerifier(auth,'recaptcha-container',{size:'invisible'});
+    if(!window.recaptchaVerifier)window.recaptchaVerifier=new RecaptchaVerifier(auth,'recaptcha-container',{size:'normal'});
     confirmationResult=await signInWithPhoneNumber(auth,fp,window.recaptchaVerifier);
     window._regData={plate,phone:fp,email};
     document.getElementById('reg-step1').style.display='none';
@@ -429,7 +429,7 @@ window.loginStep1 = async function(){
   if(!phone||phone.length<9)return showAlert('login-alert','יש להזין מספר טלפון תקין','error');
   const fp=formatPhone(phone);
   try{
-    if(!window.recaptchaLoginVerifier)window.recaptchaLoginVerifier=new RecaptchaVerifier(auth,'recaptcha-login-container',{size:'invisible'});
+    if(!window.recaptchaLoginVerifier)window.recaptchaLoginVerifier=new RecaptchaVerifier(auth,'recaptcha-login-container',{size:'normal'});
     loginConfirmationResult=await signInWithPhoneNumber(auth,fp,window.recaptchaLoginVerifier);
     document.getElementById('login-step1').style.display='none';
     document.getElementById('login-step2').style.display='block';
