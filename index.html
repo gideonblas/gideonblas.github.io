@@ -80,10 +80,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .terms-row input[type=checkbox]{width:16px;height:16px;margin-top:2px;flex-shrink:0;cursor:pointer;accent-color:var(--orange)}
 
 /* reCAPTCHA — בולט */
-.recaptcha-box{background:#FFF3E0;border:2px solid #FF9800;border-radius:14px;padding:18px 16px;margin:18px 0}
-.recaptcha-box .rc-title{font-size:14px;font-weight:700;color:#E65100;margin-bottom:4px;display:flex;align-items:center;gap:6px}
-.recaptcha-box .rc-sub{font-size:12px;color:#BF360C;margin-bottom:12px}
-.recaptcha-inner{display:flex;justify-content:center}
 
 .alert{padding:11px 14px;border-radius:10px;font-size:13px;margin-bottom:14px;display:none}
 .alert.show{display:block}
@@ -251,11 +247,7 @@ footer a:hover{color:var(--orange)}
               <input type="checkbox" id="reg-terms">
               <label for="reg-terms">אני מאשר את תנאי השימוש וכי מספר הלוחית שרשמתי הוא שלי</label>
             </div>
-            <div class="recaptcha-box">
-              <div class="rc-title">🛡️ שלב חובה — אמת שאינך רובוט</div>
-              <div class="rc-sub">סמן את התיבה למטה לפני לחיצה על הכפתור</div>
-              <div class="recaptcha-inner"><div id="recaptcha-container"></div></div>
-            </div>
+            <div id="recaptcha-container"></div>
             <button class="btn btn-primary btn-full btn-lg" onclick="registerStep1()">📱 שלח קוד אימות ב-SMS</button>
           </div>
           <div id="reg-step2" style="display:none">
@@ -281,11 +273,7 @@ footer a:hover{color:var(--orange)}
           <div id="login-alert" class="alert"></div>
           <div id="login-step1">
             <div class="form-group"><label>מספר טלפון</label><input type="tel" id="login-phone" placeholder="לדוגמה: 0501234567"></div>
-            <div class="recaptcha-box">
-              <div class="rc-title">🛡️ שלב חובה — אמת שאינך רובוט</div>
-              <div class="rc-sub">סמן את התיבה למטה לפני לחיצה על הכפתור</div>
-              <div class="recaptcha-inner"><div id="recaptcha-login-container"></div></div>
-            </div>
+            <div id="recaptcha-login-container"></div>
             <button class="btn btn-primary btn-full btn-lg" onclick="loginStep1()">📱 שלח קוד אימות</button>
           </div>
           <div id="login-step2" style="display:none">
@@ -430,16 +418,12 @@ let confirmationResult = null;
 let loginConfirmationResult = null;
 let currentChatPlate = null;
 let messagesUnsubscribe = null;
-let regRecaptchaReady = false;
-let loginRecaptchaReady = false;
 
 window._initRegRecaptcha = function() {
   if (window.recaptchaVerifier) return;
   try {
     window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-      size: 'normal',
-      callback: () => { regRecaptchaReady = true; },
-      'expired-callback': () => { regRecaptchaReady = false; }
+      size: 'invisible'
     });
     window.recaptchaVerifier.render();
   } catch(e) { console.error('reg recaptcha:', e); }
@@ -449,30 +433,17 @@ window._initLoginRecaptcha = function() {
   if (window.recaptchaLoginVerifier) return;
   try {
     window.recaptchaLoginVerifier = new RecaptchaVerifier(auth, 'recaptcha-login-container', {
-      size: 'normal',
-      callback: () => { loginRecaptchaReady = true; },
-      'expired-callback': () => { loginRecaptchaReady = false; }
+      size: 'invisible'
     });
     window.recaptchaLoginVerifier.render();
   } catch(e) { console.error('login recaptcha:', e); }
 };
 
-// אתחול reCAPTCHA כשהקונטיינר נכנס לתצוגה
-function observeAndInit(containerId, initFn) {
-  const el = document.getElementById(containerId);
-  if (!el) return;
-  const observer = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting) {
-      setTimeout(initFn, 200);
-      observer.disconnect();
-    }
-  }, {threshold: 0.1});
-  observer.observe(el);
-}
-
 window.addEventListener('load', () => {
-  observeAndInit('recaptcha-container', () => window._initRegRecaptcha());
-  observeAndInit('recaptcha-login-container', () => window._initLoginRecaptcha());
+  setTimeout(() => {
+    window._initRegRecaptcha();
+    window._initLoginRecaptcha();
+  }, 600);
 });
 
 onAuthStateChanged(auth, async (user) => {
@@ -512,12 +483,10 @@ function hideAlert(id) { document.getElementById(id).classList.remove('show'); }
 
 function resetRegRecaptcha() {
   if (window.recaptchaVerifier) { try { window.recaptchaVerifier.clear(); } catch(e){} window.recaptchaVerifier = null; }
-  regRecaptchaReady = false;
   setTimeout(() => window._initRegRecaptcha(), 500);
 }
 function resetLoginRecaptcha() {
   if (window.recaptchaLoginVerifier) { try { window.recaptchaLoginVerifier.clear(); } catch(e){} window.recaptchaLoginVerifier = null; }
-  loginRecaptchaReady = false;
   setTimeout(() => window._initLoginRecaptcha(), 500);
 }
 
@@ -530,7 +499,6 @@ window.registerStep1 = async function() {
   if (!phone || phone.length < 9) return showAlert('reg-alert', 'יש להזין מספר טלפון תקין', 'error');
   if (!email) return showAlert('reg-alert', 'יש להזין אימייל', 'error');
   if (!terms) return showAlert('reg-alert', 'יש לאשר את תנאי השימוש', 'error');
-  if (!regRecaptchaReady) return showAlert('reg-alert', '⚠️ יש לסמן "אני לא רובוט" בתיבה הכתומה', 'error');
   showAlert('reg-alert', '⏳ בודק ושולח קוד...', 'info');
   try {
     const plateDoc = await getDoc(doc(db, 'users', plate));
@@ -570,7 +538,6 @@ window.backToStep1 = function() {
 window.loginStep1 = async function() {
   const phone = document.getElementById('login-phone').value.trim();
   if (!phone || phone.length < 9) return showAlert('login-alert', 'יש להזין מספר טלפון תקין', 'error');
-  if (!loginRecaptchaReady) return showAlert('login-alert', '⚠️ יש לסמן "אני לא רובוט" בתיבה הכתומה', 'error');
   showAlert('login-alert', '⏳ שולח קוד...', 'info');
   try {
     loginConfirmationResult = await signInWithPhoneNumber(auth, formatPhone(phone), window.recaptchaLoginVerifier);
