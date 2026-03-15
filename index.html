@@ -419,32 +419,19 @@ let loginConfirmationResult = null;
 let currentChatPlate = null;
 let messagesUnsubscribe = null;
 
-window._initRegRecaptcha = function() {
-  if (window.recaptchaVerifier) return;
-  try {
-    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-      size: 'invisible'
-    });
-    window.recaptchaVerifier.render();
-  } catch(e) { console.error('reg recaptcha:', e); }
-};
-
-window._initLoginRecaptcha = function() {
-  if (window.recaptchaLoginVerifier) return;
-  try {
-    window.recaptchaLoginVerifier = new RecaptchaVerifier(auth, 'recaptcha-login-container', {
-      size: 'invisible'
-    });
-    window.recaptchaLoginVerifier.render();
-  } catch(e) { console.error('login recaptcha:', e); }
-};
-
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    window._initRegRecaptcha();
-    window._initLoginRecaptcha();
-  }, 600);
-});
+// reCAPTCHA נוצר רק ברגע הלחיצה — לא מראש
+function getRegVerifier() {
+  if (!window.recaptchaVerifier) {
+    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {size: 'invisible'});
+  }
+  return window.recaptchaVerifier;
+}
+function getLoginVerifier() {
+  if (!window.recaptchaLoginVerifier) {
+    window.recaptchaLoginVerifier = new RecaptchaVerifier(auth, 'recaptcha-login-container', {size: 'invisible'});
+  }
+  return window.recaptchaLoginVerifier;
+}
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {
@@ -483,11 +470,9 @@ function hideAlert(id) { document.getElementById(id).classList.remove('show'); }
 
 function resetRegRecaptcha() {
   if (window.recaptchaVerifier) { try { window.recaptchaVerifier.clear(); } catch(e){} window.recaptchaVerifier = null; }
-  setTimeout(() => window._initRegRecaptcha(), 500);
 }
 function resetLoginRecaptcha() {
   if (window.recaptchaLoginVerifier) { try { window.recaptchaLoginVerifier.clear(); } catch(e){} window.recaptchaLoginVerifier = null; }
-  setTimeout(() => window._initLoginRecaptcha(), 500);
 }
 
 window.registerStep1 = async function() {
@@ -503,7 +488,7 @@ window.registerStep1 = async function() {
   try {
     const plateDoc = await getDoc(doc(db, 'users', plate));
     if (plateDoc.exists()) return showAlert('reg-alert', 'מספר הלוחית הזה כבר רשום', 'error');
-    confirmationResult = await signInWithPhoneNumber(auth, formatPhone(phone), window.recaptchaVerifier);
+    confirmationResult = await signInWithPhoneNumber(auth, formatPhone(phone), getRegVerifier());
     window._regData = {plate, phone: formatPhone(phone), email};
     document.getElementById('reg-step1').style.display = 'none';
     document.getElementById('reg-step2').style.display = 'block';
@@ -540,7 +525,7 @@ window.loginStep1 = async function() {
   if (!phone || phone.length < 9) return showAlert('login-alert', 'יש להזין מספר טלפון תקין', 'error');
   showAlert('login-alert', '⏳ שולח קוד...', 'info');
   try {
-    loginConfirmationResult = await signInWithPhoneNumber(auth, formatPhone(phone), window.recaptchaLoginVerifier);
+    loginConfirmationResult = await signInWithPhoneNumber(auth, formatPhone(phone), getLoginVerifier());
     document.getElementById('login-step1').style.display = 'none';
     document.getElementById('login-step2').style.display = 'block';
     showAlert('login-alert', '✅ קוד אימות נשלח ב-SMS!', 'success');
