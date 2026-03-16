@@ -400,7 +400,6 @@ window.switchTab = switchTab;
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, signInWithCustomToken, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-functions.js";
 import { getFirestore, collection, doc, getDoc, setDoc, addDoc, updateDoc, query, where, orderBy, onSnapshot, serverTimestamp, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const app = initializeApp({
@@ -412,9 +411,25 @@ const app = initializeApp({
   appId: "1:653690224720:web:cf1489c3ff95cc90215155"
 });
 const auth = getAuth(app);
-const functions = getFunctions(app);
-const sendSmsCode = httpsCallable(functions, 'sendVerificationSMS');
-const verifySmsCode = httpsCallable(functions, 'verifyCode');
+// קריאה ישירה לפונקציות v2
+async function sendSmsCode(data) {
+  const res = await fetch('https://sendverificationsms-6lakoqxf2a-uc.a.run.app', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({data})
+  });
+  if (!res.ok) throw new Error('שגיאה בשליחת SMS: ' + res.status);
+  return res.json();
+}
+async function verifySmsCode(data) {
+  const res = await fetch('https://verifycode-6lakoqxf2a-uc.a.run.app', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({data})
+  });
+  if (!res.ok) throw new Error('קוד שגוי');
+  return res.json();
+}
 const db = getFirestore(app);
 
 let currentUserPlate = null;
