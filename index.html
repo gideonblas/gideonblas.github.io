@@ -506,7 +506,7 @@ window.registerStep2 = async function() {
   if (!otp || otp.length !== 6) return showAlert('reg-alert', 'קוד לא תקין — 6 ספרות', 'error');
   try {
     const {plate, phone, email} = window._regData;
-    const result = await verifySmsCode({ phoneNumber: phone, code: otp });
+    const result = await verifySmsCode({ phoneNumber: phone, code: String(otp) });
     const userCred = await signInWithCustomToken(auth, result.data.token);
     await setDoc(doc(db, 'users', plate), {uid: userCred.user.uid, phone, email, isBlocked: false, blockedUsers: [], createdAt: serverTimestamp()});
     currentUserPlate = plate;
@@ -542,7 +542,7 @@ window.loginStep2 = async function() {
   const otp = document.getElementById('login-otp').value.trim();
   if (!otp || otp.length !== 6) return showAlert('login-alert', 'קוד לא תקין — 6 ספרות', 'error');
   try {
-    const result = await verifySmsCode({ phoneNumber: window._loginPhone, code: otp });
+    const result = await verifySmsCode({ phoneNumber: window._loginPhone, code: String(otp) });
     await signInWithCustomToken(auth, result.data.token);
     const q = query(collection(db, 'users'), where('phone', '==', window._loginPhone));
     const snap = await getDocs(q);
