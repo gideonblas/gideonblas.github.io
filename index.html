@@ -399,7 +399,8 @@ window.switchTab = switchTab;
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getAuth, signInWithCustomToken, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-functions.js";
 import { getFirestore, collection, doc, getDoc, setDoc, addDoc, updateDoc, query, where, orderBy, onSnapshot, serverTimestamp, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const app = initializeApp({
@@ -411,6 +412,9 @@ const app = initializeApp({
   appId: "1:653690224720:web:cf1489c3ff95cc90215155"
 });
 const auth = getAuth(app);
+const functions = getFunctions(app);
+const sendSmsCode = httpsCallable(functions, 'sendVerificationSMS');
+const verifySmsCode = httpsCallable(functions, 'verifyCode');
 const db = getFirestore(app);
 
 let currentUserPlate = null;
@@ -419,19 +423,7 @@ let loginConfirmationResult = null;
 let currentChatPlate = null;
 let messagesUnsubscribe = null;
 
-// reCAPTCHA נוצר רק ברגע הלחיצה — לא מראש
-function getRegVerifier() {
-  if (!window.recaptchaVerifier) {
-    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {size: 'invisible'});
-  }
-  return window.recaptchaVerifier;
-}
-function getLoginVerifier() {
-  if (!window.recaptchaLoginVerifier) {
-    window.recaptchaLoginVerifier = new RecaptchaVerifier(auth, 'recaptcha-login-container', {size: 'invisible'});
-  }
-  return window.recaptchaLoginVerifier;
-}
+// SMS נשלח דרך Twilio Cloud Function
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {
@@ -468,12 +460,7 @@ function showAlert(id, msg, type) {
 }
 function hideAlert(id) { document.getElementById(id).classList.remove('show'); }
 
-function resetRegRecaptcha() {
-  if (window.recaptchaVerifier) { try { window.recaptchaVerifier.clear(); } catch(e){} window.recaptchaVerifier = null; }
-}
-function resetLoginRecaptcha() {
-  if (window.recaptchaLoginVerifier) { try { window.recaptchaLoginVerifier.clear(); } catch(e){} window.recaptchaLoginVerifier = null; }
-}
+
 
 window.registerStep1 = async function() {
   const plate = document.getElementById('reg-plate').value.trim();
@@ -488,14 +475,14 @@ window.registerStep1 = async function() {
   try {
     const plateDoc = await getDoc(doc(db, 'users', plate));
     if (plateDoc.exists()) return showAlert('reg-alert', 'מספר הלוחית הזה כבר רשום', 'error');
-    confirmationResult = await signInWithPhoneNumber(auth, formatPhone(phone), getRegVerifier());
-    window._regData = {plate, phone: formatPhone(phone), email};
+    const fp = formatPhone(phone);
+    await sendSmsCode({ phoneNumber: fp });
+    window._regData = {plate, phone: fp, email};
     document.getElementById('reg-step1').style.display = 'none';
     document.getElementById('reg-step2').style.display = 'block';
     showAlert('reg-alert', '✅ קוד אימות נשלח ב-SMS!', 'success');
   } catch(e) {
     showAlert('reg-alert', 'שגיאה: ' + e.message, 'error');
-    resetRegRecaptcha();
   }
 };
 
@@ -503,9 +490,10 @@ window.registerStep2 = async function() {
   const otp = document.getElementById('reg-otp').value.trim();
   if (!otp || otp.length !== 6) return showAlert('reg-alert', 'קוד לא תקין — 6 ספרות', 'error');
   try {
-    const result = await confirmationResult.confirm(otp);
     const {plate, phone, email} = window._regData;
-    await setDoc(doc(db, 'users', plate), {uid: result.user.uid, phone, email, isBlocked: false, blockedUsers: [], createdAt: serverTimestamp()});
+    const result = await verifySmsCode({ phoneNumber: phone, code: otp });
+    const userCred = await signInWithCustomToken(auth, result.data.token);
+    await setDoc(doc(db, 'users', plate), {uid: userCred.user.uid, phone, email, isBlocked: false, blockedUsers: [], createdAt: serverTimestamp()});
     currentUserPlate = plate;
     document.getElementById('nav-actions-guest').style.display = 'none';
     document.getElementById('nav-actions-user').style.display = 'flex';
@@ -517,7 +505,6 @@ window.registerStep2 = async function() {
 window.backToStep1 = function() {
   document.getElementById('reg-step1').style.display = 'block';
   document.getElementById('reg-step2').style.display = 'none';
-  resetRegRecaptcha();
 };
 
 window.loginStep1 = async function() {
@@ -525,13 +512,14 @@ window.loginStep1 = async function() {
   if (!phone || phone.length < 9) return showAlert('login-alert', 'יש להזין מספר טלפון תקין', 'error');
   showAlert('login-alert', '⏳ שולח קוד...', 'info');
   try {
-    loginConfirmationResult = await signInWithPhoneNumber(auth, formatPhone(phone), getLoginVerifier());
+    const fp = formatPhone(phone);
+    await sendSmsCode({ phoneNumber: fp });
+    window._loginPhone = fp;
     document.getElementById('login-step1').style.display = 'none';
     document.getElementById('login-step2').style.display = 'block';
     showAlert('login-alert', '✅ קוד אימות נשלח ב-SMS!', 'success');
   } catch(e) {
     showAlert('login-alert', 'שגיאה: ' + e.message, 'error');
-    resetLoginRecaptcha();
   }
 };
 
@@ -539,8 +527,9 @@ window.loginStep2 = async function() {
   const otp = document.getElementById('login-otp').value.trim();
   if (!otp || otp.length !== 6) return showAlert('login-alert', 'קוד לא תקין — 6 ספרות', 'error');
   try {
-    const result = await loginConfirmationResult.confirm(otp);
-    const q = query(collection(db, 'users'), where('phone', '==', result.user.phoneNumber));
+    const result = await verifySmsCode({ phoneNumber: window._loginPhone, code: otp });
+    await signInWithCustomToken(auth, result.data.token);
+    const q = query(collection(db, 'users'), where('phone', '==', window._loginPhone));
     const snap = await getDocs(q);
     if (snap.empty) { await signOut(auth); return showAlert('login-alert', 'מספר הטלפון לא רשום. אנא הירשם תחילה.', 'error'); }
     currentUserPlate = snap.docs[0].id;
@@ -554,7 +543,6 @@ window.loginStep2 = async function() {
 window.backToLoginStep1 = function() {
   document.getElementById('login-step1').style.display = 'block';
   document.getElementById('login-step2').style.display = 'none';
-  resetLoginRecaptcha();
 };
 
 window.logout = async function() {
