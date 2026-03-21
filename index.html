@@ -442,13 +442,19 @@ let messagesUnsubscribe = null;
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {
-    const q = query(collection(db, 'users'), where('phone', '==', user.phoneNumber));
+    const savedPhone = localStorage.getItem('itutim_phone');
+    const phoneToSearch = user.phoneNumber || savedPhone;
+    if (!phoneToSearch) return;
+    const q = query(collection(db, 'users'), where('phone', '==', phoneToSearch));
     const snap = await getDocs(q);
     if (!snap.empty) {
       currentUserPlate = snap.docs[0].id;
       document.getElementById('nav-actions-guest').style.display = 'none';
       document.getElementById('nav-actions-user').style.display = 'flex';
       document.getElementById('nav-plate').textContent = currentUserPlate;
+      document.getElementById('app-plate-display').textContent = currentUserPlate;
+      showPage('app');
+      loadMessages();
     }
   } else {
     currentUserPlate = null;
@@ -507,6 +513,7 @@ window.registerStep2 = async function() {
   try {
     const {plate, phone, email} = window._regData;
     const result = await verifySmsCode({ phoneNumber: phone, code: String(otp) });
+    localStorage.setItem('itutim_phone', phone);
     const userCred = await signInWithCustomToken(auth, result.data.token);
     await setDoc(doc(db, 'users', plate), {uid: userCred.user.uid, phone, email, isBlocked: false, blockedUsers: [], createdAt: serverTimestamp()});
     currentUserPlate = plate;
@@ -543,6 +550,7 @@ window.loginStep2 = async function() {
   if (!otp || otp.length !== 6) return showAlert('login-alert', 'קוד לא תקין — 6 ספרות', 'error');
   try {
     const result = await verifySmsCode({ phoneNumber: window._loginPhone, code: String(otp) });
+    localStorage.setItem('itutim_phone', window._loginPhone);
     await signInWithCustomToken(auth, result.data.token);
     const q = query(collection(db, 'users'), where('phone', '==', window._loginPhone));
     const snap = await getDocs(q);
