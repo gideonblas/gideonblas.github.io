@@ -422,7 +422,7 @@ async function sendSmsCode(data) {
   return res.json();
 }
 async function verifySmsCode(data) {
-  const res = await fetch('https://verifycode-6lakoqxf2a-uc.a.run.app', {
+  const res = await fetch('https://verifycodeweb-6lakoqxf2a-uc.a.run.app', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({data})
