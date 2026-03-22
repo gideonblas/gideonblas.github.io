@@ -601,10 +601,15 @@ async function sendMessage(targetPlate, text) {
   try {
     const targetDoc = await getDoc(doc(db, 'users', targetPlate));
     if (!targetDoc.exists()) return showAlert('send-alert', 'מספר הלוחית לא רשום במערכת', 'error');
-    await addDoc(collection(db, 'messages'), {
+    await addDoc(collection(db, 'alerts'), {
       chatId: getChatId(currentUserPlate, targetPlate),
+      participants: [currentUserPlate, targetPlate],
+      senderPlate: currentUserPlate,
+      receiverPlate: targetPlate,
       from: currentUserPlate, to: targetPlate,
-      text, timestamp: serverTimestamp(), read: false
+      message: text, text: text,
+      timestamp: serverTimestamp(), read: false,
+      hiddenFor: []
     });
     showAlert('send-alert', '✅ האיתות נשלח בהצלחה!', 'success');
     document.getElementById('target-plate').value = '';
@@ -632,10 +637,14 @@ window.sendCustomMessage = async function() {
 function loadMessages() {
   if (!currentUserPlate) return;
   if (messagesUnsubscribe) messagesUnsubscribe();
-  const q = query(collection(db, 'messages'), where('to', '==', currentUserPlate), orderBy('timestamp', 'desc'));
+  const q = query(collection(db, 'alerts'), where('receiverPlate', '==', currentUserPlate), orderBy('timestamp', 'desc'));
   messagesUnsubscribe = onSnapshot(q, (snap) => {
     const seen = {}; const msgs = [];
-    snap.docs.forEach(d => { const data = {id: d.id, ...d.data()}; if (!seen[data.from]) { seen[data.from] = data; msgs.push(data); } });
+    snap.docs.forEach(d => {
+      const data = {id: d.id, ...d.data()};
+      const from = data.senderPlate || data.from;
+      if (!seen[from]) { seen[from] = {...data, from}; msgs.push({...data, from}); }
+    });
     renderMessages(msgs);
   });
 }
@@ -651,7 +660,7 @@ function renderMessages(messages) {
   list.innerHTML = messages.map(msg =>
     `<div class="message-item ${!msg.read ? 'unread' : ''}" onclick="openChat('${msg.from}')">
       <div class="msg-header"><span class="msg-plate">🚗 ${msg.from}</span><span class="msg-time">${formatTime(msg.timestamp)}</span></div>
-      <div class="msg-text">${msg.text}</div>
+      <div class="msg-text">${msg.message || msg.text}</div>
     </div>`).join('');
 }
 
@@ -660,21 +669,23 @@ window.openChat = async function(otherPlate) {
   document.getElementById('chat-modal-title').textContent = 'שיחה עם ' + otherPlate;
   document.getElementById('chat-modal').classList.add('show');
   const chatId = getChatId(currentUserPlate, otherPlate);
-  const q = query(collection(db, 'messages'), where('chatId', '==', chatId), orderBy('timestamp', 'asc'));
+  const q = query(collection(db, 'alerts'), where('chatId', '==', chatId), orderBy('timestamp', 'asc'));
   const snap = await getDocs(q);
   const chatEl = document.getElementById('chat-messages');
   chatEl.innerHTML = '';
   snap.docs.forEach(d => {
-    const data = d.data(); const isSent = data.from === currentUserPlate;
+    const data = d.data();
+    const isSent = (data.senderPlate || data.from) === currentUserPlate;
     const div = document.createElement('div');
     div.className = 'chat-bubble ' + (isSent ? 'sent' : 'received');
-    div.innerHTML = data.text + '<div class="bubble-time">' + formatTime(data.timestamp) + '</div>';
+    div.innerHTML = (data.message || data.text) + '<div class="bubble-time">' + formatTime(data.timestamp) + '</div>';
     chatEl.appendChild(div);
   });
   chatEl.scrollTop = chatEl.scrollHeight;
   snap.docs.forEach(async d => {
-    if (d.data().to === currentUserPlate && !d.data().read) {
-      try { await updateDoc(doc(db, 'messages', d.id), {read: true}); } catch(e) {}
+    const data = d.data();
+    if ((data.receiverPlate === currentUserPlate || data.to === currentUserPlate) && !data.read) {
+      try { await updateDoc(doc(db, 'alerts', d.id), {read: true}); } catch(e) {}
     }
   });
 };
