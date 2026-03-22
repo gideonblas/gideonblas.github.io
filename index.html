@@ -514,7 +514,8 @@ window.registerStep2 = async function() {
     const {plate, phone, email} = window._regData;
     const result = await verifySmsCode({ phoneNumber: phone, code: String(otp) });
     localStorage.setItem('itutim_phone', phone);
-    const userCred = await signInWithCustomToken(auth, result.data.token);
+    const token2 = result?.result?.token || result?.data?.token;
+    const userCred = await signInWithCustomToken(auth, token2);
     await setDoc(doc(db, 'users', plate), {uid: userCred.user.uid, phone, email, isBlocked: false, blockedUsers: [], createdAt: serverTimestamp()});
     currentUserPlate = plate;
     document.getElementById('nav-actions-guest').style.display = 'none';
@@ -550,17 +551,21 @@ window.loginStep2 = async function() {
   if (!otp || otp.length !== 6) return showAlert('login-alert', 'קוד לא תקין — 6 ספרות', 'error');
   try {
     const result = await verifySmsCode({ phoneNumber: window._loginPhone, code: String(otp) });
+    console.log('verifySmsCode result:', JSON.stringify(result));
     localStorage.setItem('itutim_phone', window._loginPhone);
-    await signInWithCustomToken(auth, result.data.token);
+    const token = result?.result?.token || result?.data?.token;
+    if (token) {
+      await signInWithCustomToken(auth, token);
+    }
     const q = query(collection(db, 'users'), where('phone', '==', window._loginPhone));
     const snap = await getDocs(q);
-    if (snap.empty) { await signOut(auth); return showAlert('login-alert', 'מספר הטלפון לא רשום. אנא הירשם תחילה.', 'error'); }
+    if (snap.empty) { return showAlert('login-alert', 'מספר הטלפון לא רשום. אנא הירשם תחילה.', 'error'); }
     currentUserPlate = snap.docs[0].id;
     document.getElementById('nav-actions-guest').style.display = 'none';
     document.getElementById('nav-actions-user').style.display = 'flex';
     document.getElementById('nav-plate').textContent = currentUserPlate;
     showAppPage();
-  } catch(e) { showAlert('login-alert', 'קוד שגוי, נסה שוב', 'error'); }
+  } catch(e) { console.error('loginStep2 error:', e); showAlert('login-alert', 'שגיאה: ' + e.message, 'error'); }
 };
 
 window.backToLoginStep1 = function() {
