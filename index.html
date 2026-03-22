@@ -272,6 +272,7 @@ footer a:hover{color:var(--orange)}
         <div class="form-card">
           <div id="login-alert" class="alert"></div>
           <div id="login-step1">
+            <div class="form-group"><label>מספר לוחית רכב</label><input type="text" id="login-plate" placeholder="לדוגמה: 1234567"></div>
             <div class="form-group"><label>מספר טלפון</label><input type="tel" id="login-phone" placeholder="לדוגמה: 0501234567"></div>
             <div id="recaptcha-login-container"></div>
             <button class="btn btn-primary btn-full btn-lg" onclick="loginStep1()">📱 שלח קוד אימות</button>
@@ -531,13 +532,16 @@ window.backToStep1 = function() {
 };
 
 window.loginStep1 = async function() {
+  const plate = document.getElementById('login-plate').value.trim();
   const phone = document.getElementById('login-phone').value.trim();
+  if (!plate || plate.length < 5) return showAlert('login-alert', 'יש להזין מספר לוחית תקין', 'error');
   if (!phone || phone.length < 9) return showAlert('login-alert', 'יש להזין מספר טלפון תקין', 'error');
   showAlert('login-alert', '⏳ שולח קוד...', 'info');
   try {
     const fp = formatPhone(phone);
     await sendSmsCode({ phoneNumber: fp });
     window._loginPhone = fp;
+    window._loginPlate = plate;
     document.getElementById('login-step1').style.display = 'none';
     document.getElementById('login-step2').style.display = 'block';
     showAlert('login-alert', '✅ קוד אימות נשלח ב-SMS!', 'success');
@@ -557,20 +561,17 @@ window.loginStep2 = async function() {
     if (token) {
       await signInWithCustomToken(auth, token);
     }
-    const phoneFormats = [
-      window._loginPhone,
-      window._loginPhone.replace('+972', '0'),
-      window._loginPhone.replace('+972', 'O'),
-      window._loginPhone.substring(1)
-    ];
-    let snap = null;
-    for (const fmt of phoneFormats) {
-      const q = query(collection(db, 'users'), where('phone', '==', fmt));
-      const s = await getDocs(q);
-      if (!s.empty) { snap = s; break; }
+    // בדוק שהלוחית קיימת ושייכת לטלפון זה
+    const plateDoc = await getDoc(doc(db, 'users', window._loginPlate));
+    if (!plateDoc.exists()) return showAlert('login-alert', 'מספר הלוחית לא רשום. אנא הירשם תחילה.', 'error');
+    const plateData = plateDoc.data();
+    const savedPhone = plateData.phone || '';
+    const fpNormalized = window._loginPhone.replace('+972', '0').replace('+972', 'O');
+    const savedNormalized = savedPhone.replace('+972', '0');
+    if (savedPhone !== window._loginPhone && savedNormalized !== fpNormalized && savedPhone !== window._loginPhone.replace('+972','0') && savedPhone.replace('O','0') !== window._loginPhone.replace('+972','0')) {
+      return showAlert('login-alert', 'מספר הטלפון אינו תואם ללוחית זו.', 'error');
     }
-    if (!snap || snap.empty) { return showAlert('login-alert', 'מספר הטלפון לא רשום. אנא הירשם תחילה.', 'error'); }
-    currentUserPlate = snap.docs[0].id;
+    currentUserPlate = window._loginPlate;
     document.getElementById('nav-actions-guest').style.display = 'none';
     document.getElementById('nav-actions-user').style.display = 'flex';
     document.getElementById('nav-plate').textContent = currentUserPlate;
