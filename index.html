@@ -557,9 +557,19 @@ window.loginStep2 = async function() {
     if (token) {
       await signInWithCustomToken(auth, token);
     }
-    const q = query(collection(db, 'users'), where('phone', '==', window._loginPhone));
-    const snap = await getDocs(q);
-    if (snap.empty) { return showAlert('login-alert', 'מספר הטלפון לא רשום. אנא הירשם תחילה.', 'error'); }
+    const phoneFormats = [
+      window._loginPhone,
+      window._loginPhone.replace('+972', '0'),
+      window._loginPhone.replace('+972', 'O'),
+      window._loginPhone.substring(1)
+    ];
+    let snap = null;
+    for (const fmt of phoneFormats) {
+      const q = query(collection(db, 'users'), where('phone', '==', fmt));
+      const s = await getDocs(q);
+      if (!s.empty) { snap = s; break; }
+    }
+    if (!snap || snap.empty) { return showAlert('login-alert', 'מספר הטלפון לא רשום. אנא הירשם תחילה.', 'error'); }
     currentUserPlate = snap.docs[0].id;
     document.getElementById('nav-actions-guest').style.display = 'none';
     document.getElementById('nav-actions-user').style.display = 'flex';
