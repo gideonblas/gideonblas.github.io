@@ -186,7 +186,7 @@ footer a:hover{color:var(--orange)}
 
 <nav>
   <a class="nav-logo" onclick="showPage('landing');return false;" href="#">🚗 איתותים</a>
-  <button id="lang-btn" class="btn btn-outline" onclick="toggleLang()" style="font-size:13px;padding:7px 14px">🌐 English</button>
+  <button id="lang-btn" class="btn btn-outline" style="font-size:13px;padding:7px 14px">🌐 English</button>
   <div id="nav-actions-guest" class="nav-actions">
     <button class="btn btn-secondary" onclick="goToSection('section-login')" data-he="כניסה לרשומים" data-en="Sign In">כניסה לרשומים</button>
     <button class="btn btn-primary" onclick="goToSection('section-register')" data-he="הרשמה חינמית" data-en="Register Free">הרשמה חינמית</button>
@@ -375,7 +375,7 @@ footer a:hover{color:var(--orange)}
   </div>
 </div>
 
-<script defer>
+<script>
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
@@ -594,6 +594,14 @@ window.toggleLang = function() {
 window.goToSection = goToSection;
 window.scrollToId = scrollToId;
 window.switchTab = switchTab;
+
+document.addEventListener('DOMContentLoaded', function() {
+  var btn = document.getElementById('lang-btn');
+  if (btn) btn.addEventListener('click', function() {
+    currentLang = currentLang === 'he' ? 'en' : 'he';
+    applyTranslations(currentLang);
+  });
+});
 </script>
 
 <script type="module">
