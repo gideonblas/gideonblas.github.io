@@ -18,6 +18,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .btn-primary{background:var(--orange);color:white}.btn-primary:hover{background:var(--orange-light);transform:translateY(-1px)}
 .btn-secondary{background:var(--gray);color:var(--text)}.btn-secondary:hover{background:var(--gray2)}
 .btn-outline{background:transparent;color:var(--blue);border:2px solid var(--blue)}.btn-outline:hover{background:var(--blue);color:white}
+#lang-btn{margin-left:8px}
 .btn-success{background:var(--success);color:white}.btn-success:hover{opacity:.9}
 .btn-lg{padding:14px 32px;font-size:17px;border-radius:14px}
 .btn-full{width:100%}
@@ -185,9 +186,10 @@ footer a:hover{color:var(--orange)}
 
 <nav>
   <a class="nav-logo" onclick="showPage('landing');return false;" href="#">🚗 איתותים</a>
+  <button id="lang-btn" class="btn btn-outline" onclick="toggleLang()" style="font-size:13px;padding:7px 14px">🌐 English</button>
   <div id="nav-actions-guest" class="nav-actions">
-    <button class="btn btn-secondary" onclick="goToSection('section-login')">כניסה לרשומים</button>
-    <button class="btn btn-primary" onclick="goToSection('section-register')">הרשמה חינמית</button>
+    <button class="btn btn-secondary" onclick="goToSection('section-login')" data-he="כניסה לרשומים" data-en="Sign In">כניסה לרשומים</button>
+    <button class="btn btn-primary" onclick="goToSection('section-register')" data-he="הרשמה חינמית" data-en="Register Free">הרשמה חינמית</button>
   </div>
   <div id="nav-actions-user" class="nav-actions" style="display:none">
     <span style="font-size:13px;color:var(--text-light)">לוחית:</span>
@@ -398,6 +400,197 @@ function switchTab(tab, btn) {
   if (btn) btn.classList.add('active');
 }
 window.showPage = showPage;
+
+// ===== LANGUAGE SYSTEM =====
+let currentLang = 'he';
+
+const translations = {
+  // NAV
+  'nav-logo': {he: '🚗 איתותים', en: '🚗 Itutim'},
+  
+  // HERO
+  'hero-h1': {he: 'תקשורת בין נהגים — <span>בקלות</span>', en: 'Driver-to-Driver Communication — <span>Made Easy</span>'},
+  'hero-p': {he: 'שלח הודעה לכל נהג על הכביש רק עם מספר הלוחית שלו. ללא שיתוף מספר טלפון.', en: 'Send a message to any driver using only their license plate number. No phone number sharing needed.'},
+  'hero-btn-reg': {he: 'הרשמה חינמית 🚀', en: 'Register Free 🚀'},
+  'hero-btn-login': {he: 'כניסה לרשומים', en: 'Sign In'},
+
+  // FEATURES
+  'features-h2': {he: 'למה איתותים?', en: 'Why Itutim?'},
+  'features-sub': {he: 'הדרך הכי פשוטה לתקשר עם נהגים', en: 'The easiest way to communicate with drivers'},
+  'feat1-h': {he: 'לפי מספר לוחית', en: 'By License Plate'},
+  'feat1-p': {he: 'שלח הודעה לכל רכב רשום — רק צריך את מספר הלוחית.', en: 'Send a message to any registered vehicle — just the plate number.'},
+  'feat2-h': {he: 'התראות מיידיות', en: 'Instant Notifications'},
+  'feat2-p': {he: 'קבל התראות בזמן אמת כשמישהו שולח לך איתות.', en: 'Get real-time notifications when someone sends you a signal.'},
+  'feat3-h': {he: 'פרטיות מלאה', en: 'Full Privacy'},
+  'feat3-p': {he: 'ללא שיתוף מספר טלפון. רק מספר הרכב גלוי.', en: 'No phone number sharing. Only your plate number is visible.'},
+
+  // REGISTER FORM
+  'reg-title': {he: '🆕 הרשמה — חדשים? מתחילים כאן', en: '🆕 Register — New here? Start here'},
+  'reg-sub': {he: 'צור חשבון חינמי עם מספר הרכב שלך — תהליך של דקה', en: 'Create a free account with your plate number — takes a minute'},
+  'reg-plate-lbl': {he: 'מספר לוחית רכב', en: 'License Plate Number'},
+  'reg-phone-lbl': {he: 'מספר טלפון', en: 'Phone Number'},
+  'reg-email-lbl': {he: 'אימייל', en: 'Email'},
+  'reg-terms-lbl': {he: 'אני מאשר את', en: 'I agree to the'},
+  'reg-terms-link': {he: 'תנאי השימוש', en: 'Terms of Use'},
+  'reg-terms-rest': {he: 'וכי מספר הלוחית שרשמתי הוא שלי', en: 'and confirm that the plate number I entered is mine'},
+  'reg-btn': {he: '📱 שלח קוד אימות ב-SMS', en: '📱 Send SMS Verification Code'},
+  'reg-otp-p': {he: 'הזן את קוד האימות שנשלח אליך ב-SMS', en: 'Enter the verification code sent to you by SMS'},
+  'reg-verify-btn': {he: '✅ אמת והמשך', en: '✅ Verify & Continue'},
+  'reg-back-btn': {he: 'חזור', en: 'Back'},
+  'reg-switch': {he: 'כבר רשום?', en: 'Already registered?'},
+  'reg-switch-link': {he: 'עבור לכניסה ↓', en: 'Go to Sign In ↓'},
+
+  // LOGIN FORM
+  'login-title': {he: '🔑 כניסה לרשומים', en: '🔑 Sign In'},
+  'login-sub': {he: 'יש לך כבר חשבון? הכנס עם מספר הטלפון שלך', en: 'Already have an account? Sign in with your phone number'},
+  'login-plate-lbl': {he: 'מספר לוחית רכב', en: 'License Plate Number'},
+  'login-phone-lbl': {he: 'מספר טלפון', en: 'Phone Number'},
+  'login-btn': {he: '📱 שלח קוד אימות', en: '📱 Send Verification Code'},
+  'login-otp-p': {he: 'הזן את קוד האימות שנשלח אליך ב-SMS', en: 'Enter the verification code sent to you by SMS'},
+  'login-verify-btn': {he: '✅ אמת וכנס', en: '✅ Verify & Sign In'},
+  'login-back-btn': {he: 'חזור', en: 'Back'},
+  'login-switch': {he: 'עדיין לא רשום?', en: 'Not registered yet?'},
+  'login-switch-link': {he: 'עבור להרשמה ↑', en: 'Go to Register ↑'},
+
+  // DOWNLOAD
+  'dl-h2': {he: 'הורד את האפליקציה', en: 'Download the App'},
+  'dl-p': {he: 'חוויה מלאה עם התראות Push', en: 'Full experience with Push notifications'},
+
+  // CONTACT & PRIVACY
+  'contact-h2': {he: 'צור קשר', en: 'Contact Us'},
+  'privacy-h2': {he: 'מדיניות פרטיות', en: 'Privacy Policy'},
+  'privacy-h3-1': {he: 'מידע שאנו אוספים', en: 'Information We Collect'},
+  'privacy-p-1': {he: 'האפליקציה אוספת מספר רכב, מספר טלפון ואימייל בעת ההרשמה לצורך אימות זהות ותקשורת.', en: 'The app collects a vehicle number, phone number and email upon registration for identity verification and communication.'},
+  'privacy-h3-2': {he: 'יצירת קשר', en: 'Contact'},
+
+  // FOOTER
+  'footer-privacy': {he: 'מדיניות פרטיות', en: 'Privacy Policy'},
+  'footer-contact': {he: 'צור קשר', en: 'Contact'},
+
+  // TERMS MODAL
+  'terms-modal-title': {he: '📋 תנאי שימוש', en: '📋 Terms of Use'},
+};
+
+function applyTranslations(lang) {
+  // כיוון
+  document.documentElement.lang = lang === 'he' ? 'he' : 'en';
+  document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+  
+  // לוגו
+  document.querySelector('.nav-logo').innerHTML = translations['nav-logo'][lang];
+
+  // hero
+  document.querySelector('.hero-text h1').innerHTML = translations['hero-h1'][lang];
+  document.querySelector('.hero-text p').textContent = translations['hero-p'][lang];
+  document.querySelector('.btn-hero-reg').textContent = translations['hero-btn-reg'][lang];
+  document.querySelector('.btn-hero-login').textContent = translations['hero-btn-login'][lang];
+
+  // features
+  document.querySelector('.section-title h2').textContent = translations['features-h2'][lang];
+  document.querySelector('.section-title p').textContent = translations['features-sub'][lang];
+  const fcards = document.querySelectorAll('.feature-card');
+  if (fcards[0]) { fcards[0].querySelector('h3').textContent = translations['feat1-h'][lang]; fcards[0].querySelector('p').textContent = translations['feat1-p'][lang]; }
+  if (fcards[1]) { fcards[1].querySelector('h3').textContent = translations['feat2-h'][lang]; fcards[1].querySelector('p').textContent = translations['feat2-p'][lang]; }
+  if (fcards[2]) { fcards[2].querySelector('h3').textContent = translations['feat3-h'][lang]; fcards[2].querySelector('p').textContent = translations['feat3-p'][lang]; }
+
+  // register form
+  const regTitle = document.querySelector('#section-register .form-block-title h3');
+  const regSub = document.querySelector('#section-register .form-block-title p');
+  if (regTitle) regTitle.textContent = translations['reg-title'][lang];
+  if (regSub) regSub.textContent = translations['reg-sub'][lang];
+  const regLabels = document.querySelectorAll('#reg-step1 .form-group label');
+  if (regLabels[0]) regLabels[0].textContent = translations['reg-plate-lbl'][lang];
+  if (regLabels[1]) regLabels[1].textContent = translations['reg-phone-lbl'][lang];
+  if (regLabels[2]) regLabels[2].textContent = translations['reg-email-lbl'][lang];
+  // terms row
+  const termsLabel = document.querySelector('.terms-row label');
+  if (termsLabel) termsLabel.innerHTML = translations['reg-terms-lbl'][lang] + ' <span class="auth-link" onclick="openTermsModal()">' + translations['reg-terms-link'][lang] + '</span> ' + translations['reg-terms-rest'][lang];
+  const regBtn = document.querySelector('#reg-step1 .btn-primary');
+  if (regBtn) regBtn.textContent = translations['reg-btn'][lang];
+  const regOtpP = document.querySelector('#reg-step2 p');
+  if (regOtpP) regOtpP.textContent = translations['reg-otp-p'][lang];
+  const regVerifyBtn = document.querySelector('#reg-step2 .btn-success');
+  if (regVerifyBtn) regVerifyBtn.textContent = translations['reg-verify-btn'][lang];
+  const regBackBtn = document.querySelector('#reg-step2 .btn-secondary');
+  if (regBackBtn) regBackBtn.textContent = translations['reg-back-btn'][lang];
+  const regSwitch = document.querySelector('#section-register .divider-link');
+  if (regSwitch) regSwitch.innerHTML = translations['reg-switch'][lang] + ' <span class="auth-link" onclick="goToSection('section-login')">' + translations['reg-switch-link'][lang] + '</span>';
+
+  // login form
+  const loginTitle = document.querySelector('#section-login .form-block-title h3');
+  const loginSub = document.querySelector('#section-login .form-block-title p');
+  if (loginTitle) loginTitle.textContent = translations['login-title'][lang];
+  if (loginSub) loginSub.textContent = translations['login-sub'][lang];
+  const loginLabels = document.querySelectorAll('#login-step1 .form-group label');
+  if (loginLabels[0]) loginLabels[0].textContent = translations['login-plate-lbl'][lang];
+  if (loginLabels[1]) loginLabels[1].textContent = translations['login-phone-lbl'][lang];
+  const loginBtn = document.querySelector('#login-step1 .btn-primary');
+  if (loginBtn) loginBtn.textContent = translations['login-btn'][lang];
+  const loginOtpP = document.querySelector('#login-step2 p');
+  if (loginOtpP) loginOtpP.textContent = translations['login-otp-p'][lang];
+  const loginVerifyBtn = document.querySelector('#login-step2 .btn-success');
+  if (loginVerifyBtn) loginVerifyBtn.textContent = translations['login-verify-btn'][lang];
+  const loginBackBtn = document.querySelector('#login-step2 .btn-secondary');
+  if (loginBackBtn) loginBackBtn.textContent = translations['login-back-btn'][lang];
+  const loginSwitch = document.querySelector('#section-login .divider-link');
+  if (loginSwitch) loginSwitch.innerHTML = translations['login-switch'][lang] + ' <span class="auth-link" onclick="goToSection('section-register')">' + translations['login-switch-link'][lang] + '</span>';
+
+  // download
+  const dlH2 = document.querySelector('.download-section h2');
+  const dlP = document.querySelector('.download-section p');
+  if (dlH2) dlH2.textContent = translations['dl-h2'][lang];
+  if (dlP) dlP.textContent = translations['dl-p'][lang];
+
+  // contact & privacy
+  const sections = document.querySelectorAll('.simple-inner');
+  sections.forEach(s => {
+    const h2 = s.querySelector('h2');
+    if (!h2) return;
+    if (h2.textContent.includes('קשר') || h2.textContent.includes('Contact')) {
+      h2.textContent = translations['contact-h2'][lang];
+    }
+    if (h2.textContent.includes('פרטיות') || h2.textContent.includes('Privacy')) {
+      h2.textContent = translations['privacy-h2'][lang];
+      const h3s = s.querySelectorAll('h3');
+      const ps = s.querySelectorAll('p');
+      if (h3s[0]) h3s[0].textContent = translations['privacy-h3-1'][lang];
+      if (ps[0]) ps[0].textContent = translations['privacy-p-1'][lang];
+      if (h3s[1]) h3s[1].textContent = translations['privacy-h3-2'][lang];
+    }
+  });
+
+  // footer
+  const footerLinks = document.querySelectorAll('footer a');
+  footerLinks.forEach(a => {
+    const href = a.getAttribute('onclick') || '';
+    if (href.includes('privacy')) a.textContent = translations['footer-privacy'][lang];
+    if (href.includes('contact')) a.textContent = translations['footer-contact'][lang];
+  });
+
+  // terms modal title
+  const termsTitle = document.querySelector('.terms-modal-header h3');
+  if (termsTitle) termsTitle.textContent = translations['terms-modal-title'][lang];
+
+  // כפתור שפה
+  document.getElementById('lang-btn').textContent = lang === 'he' ? '🌐 English' : '🌐 עברית';
+
+  // placeholders
+  const regPlateInput = document.getElementById('reg-plate');
+  const regPhoneInput = document.getElementById('reg-phone');
+  const regEmailInput = document.getElementById('reg-email');
+  const loginPlateInput = document.getElementById('login-plate');
+  const loginPhoneInput = document.getElementById('login-phone');
+  if (regPlateInput) regPlateInput.placeholder = lang === 'he' ? 'לדוגמה: 1234567' : 'e.g. 1234567';
+  if (regPhoneInput) regPhoneInput.placeholder = lang === 'he' ? 'לדוגמה: 0501234567' : 'e.g. 0501234567';
+  if (regEmailInput) regEmailInput.placeholder = 'your@email.com';
+  if (loginPlateInput) loginPlateInput.placeholder = lang === 'he' ? 'לדוגמה: 1234567' : 'e.g. 1234567';
+  if (loginPhoneInput) loginPhoneInput.placeholder = lang === 'he' ? 'לדוגמה: 0501234567' : 'e.g. 0501234567';
+}
+
+window.toggleLang = function() {
+  currentLang = currentLang === 'he' ? 'en' : 'he';
+  applyTranslations(currentLang);
+};
 window.goToSection = goToSection;
 window.scrollToId = scrollToId;
 window.switchTab = switchTab;
