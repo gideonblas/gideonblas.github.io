@@ -375,7 +375,7 @@ footer a:hover{color:var(--orange)}
   </div>
 </div>
 
-<script>
+<script defer>
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
@@ -471,7 +471,7 @@ const translations = {
   'terms-modal-title': {he: '📋 תנאי שימוש', en: '📋 Terms of Use'},
 };
 
-function applyTranslations(lang) {
+window.applyTranslations = function(lang) {
   // כיוון
   document.documentElement.lang = lang === 'he' ? 'he' : 'en';
   document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
