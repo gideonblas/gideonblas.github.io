@@ -215,7 +215,7 @@ footer a:hover{color:var(--orange)}
       <div class="hero-phone">
         <div class="phone-mockup">
           <div class="phone-screen">
-            <div class="mock-logo">🚗</div>
+            <div class="mock-logo"><img src="LOGO1.png" style="height:32px;width:32px;border-radius:6px;object-fit:cover"></div>
             <div class="mock-title">ברוכים הבאים לאיתותים</div>
             <div class="mock-plate"><div class="mock-flag">★<br>IL</div><div class="mock-text">שיחקת-אותה 👑</div></div>
             <div class="mock-plate"><div class="mock-flag">★<br>IL</div><div class="mock-text">מפנה-מקום 🅿️</div></div>
@@ -514,7 +514,7 @@ window.applyTranslations = function(lang) {
   const regBackBtn = document.querySelector('#reg-step2 .btn-secondary');
   if (regBackBtn) regBackBtn.textContent = translations['reg-back-btn'][lang];
   const regSwitch = document.querySelector('#section-register .divider-link');
-  if (regSwitch) regSwitch.innerHTML = translations['reg-switch'][lang] + ' <span class="auth-link" onclick="goToSection('section-login')">' + translations['reg-switch-link'][lang] + '</span>';
+  if (regSwitch) regSwitch.innerHTML = translations['reg-switch'][lang] + ' <span class="auth-link" onclick="goToSection(\'section-login\')">' + translations['reg-switch-link'][lang] + '</span>';
 
   // login form
   const loginTitle = document.querySelector('#section-login .form-block-title h3');
@@ -533,7 +533,7 @@ window.applyTranslations = function(lang) {
   const loginBackBtn = document.querySelector('#login-step2 .btn-secondary');
   if (loginBackBtn) loginBackBtn.textContent = translations['login-back-btn'][lang];
   const loginSwitch = document.querySelector('#section-login .divider-link');
-  if (loginSwitch) loginSwitch.innerHTML = translations['login-switch'][lang] + ' <span class="auth-link" onclick="goToSection('section-register')">' + translations['login-switch-link'][lang] + '</span>';
+  if (loginSwitch) loginSwitch.innerHTML = translations['login-switch'][lang] + ' <span class="auth-link" onclick="goToSection(\'section-register\')">' + translations['login-switch-link'][lang] + '</span>';
 
   // download
   const dlH2 = document.querySelector('.download-section h2');
