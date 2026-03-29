@@ -185,8 +185,8 @@ footer a:hover{color:var(--orange)}
 <body>
 
 <nav>
-  <a class="nav-logo" onclick="showPage('landing');return false;" href="#">🚗 איתותים</a>
-  <button id="lang-btn" class="btn btn-outline" style="font-size:13px;padding:7px 14px">🌐 English</button>
+  <a class="nav-logo" onclick="showPage('landing');return false;" href="#"><img src="LOGO1.png" style="height:36px;width:36px;border-radius:8px;object-fit:cover"> איתותים</a>
+  <button id="lang-btn" class="btn btn-outline" style="font-size:13px;padding:7px 14px" onclick="if(window._toggleLang)window._toggleLang()">🌐 English</button>
   <div id="nav-actions-guest" class="nav-actions">
     <button class="btn btn-secondary" onclick="goToSection('section-login')" data-he="כניסה לרשומים" data-en="Sign In">כניסה לרשומים</button>
     <button class="btn btn-primary" onclick="goToSection('section-register')" data-he="הרשמה חינמית" data-en="Register Free">הרשמה חינמית</button>
@@ -406,7 +406,7 @@ let currentLang = 'he';
 
 const translations = {
   // NAV
-  'nav-logo': {he: '🚗 איתותים', en: '🚗 Itutim'},
+  'nav-logo': {he: '<img src="LOGO1.png" style="height:36px;width:36px;border-radius:8px;object-fit:cover"> איתותים', en: '<img src="LOGO1.png" style="height:36px;width:36px;border-radius:8px;object-fit:cover"> Itutim'},
   
   // HERO
   'hero-h1': {he: 'תקשורת בין נהגים — <span>בקלות</span>', en: 'Driver-to-Driver Communication — <span>Made Easy</span>'},
@@ -595,12 +595,13 @@ window.goToSection = goToSection;
 window.scrollToId = scrollToId;
 window.switchTab = switchTab;
 
+window._toggleLang = function() {
+  currentLang = currentLang === 'he' ? 'en' : 'he';
+  applyTranslations(currentLang);
+};
 document.addEventListener('DOMContentLoaded', function() {
   var btn = document.getElementById('lang-btn');
-  if (btn) btn.addEventListener('click', function() {
-    currentLang = currentLang === 'he' ? 'en' : 'he';
-    applyTranslations(currentLang);
-  });
+  if (btn) btn.addEventListener('click', window._toggleLang);
 });
 </script>
 
