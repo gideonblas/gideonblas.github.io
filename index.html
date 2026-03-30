@@ -205,7 +205,7 @@ footer a:hover{color:var(--orange)}
   <section class="hero">
     <div class="hero-inner">
       <div class="hero-text">
-        <h1>תקשורת בין נהגים - <span>בקלות</span></h1>
+        <h1>תקשורת בין נהגים<br><span>בקלות</span></h1>
         <p>שלח הודעה לכל נהג על הכביש רק עם מספר הלוחית שלו. ללא שיתוף מספר טלפון.</p>
         <div class="hero-btns">
           <button class="btn-hero-reg" onclick="goToSection('section-register')">הרשמה חינמית 🚀</button>
@@ -321,7 +321,7 @@ footer a:hover{color:var(--orange)}
       <p>Autochat1000@gmail.com</p>
     </div>
   </div>
-  <footer><p>© 2026 איתותים | <a href="#" onclick="scrollToId('privacy');return false">מדיניות פרטיות</a> | <a href="#" onclick="scrollToId('contact');return false">צור קשר</a></p></footer>
+  <footer><p>© 2026 איתותים | <a href="#privacy" onclick="showPage('landing');setTimeout(()=>document.getElementById('privacy').scrollIntoView({behavior:'smooth'}),150);return false">מדיניות פרטיות</a> | <a href="#contact" onclick="showPage('landing');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),150);return false">צור קשר</a></p></footer>
 </div>
 
 <!-- APP -->
@@ -409,7 +409,7 @@ const translations = {
   'nav-logo': {he: '<img src="LOGO1.png" style="height:36px;width:36px;border-radius:8px;object-fit:cover"> איתותים', en: '<img src="LOGO1.png" style="height:36px;width:36px;border-radius:8px;object-fit:cover"> Itutim'},
   
   // HERO
-  'hero-h1': {he: 'תקשורת בין נהגים - <span>בקלות</span>', en: 'Driver-to-Driver Communication — <span>Made Easy</span>'},
+  'hero-h1': {he: 'תקשורת בין נהגים<br><span>בקלות</span>', en: 'Driver-to-Driver Communication<br><span>Made Easy</span>'},
   'hero-p': {he: 'שלח הודעה לכל נהג על הכביש רק עם מספר הלוחית שלו. ללא שיתוף מספר טלפון.', en: 'Send a message to any driver using only their license plate number. No phone number sharing needed.'},
   'hero-btn-reg': {he: 'הרשמה חינמית 🚀', en: 'Register Free 🚀'},
   'hero-btn-login': {he: 'כניסה לרשומים', en: 'Sign In'},
