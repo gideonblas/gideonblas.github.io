@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>תמיכה - איתותים</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--orange:#FF6B00;--blue:#1A3A6B;--gray:#F5F5F5;--text:#1A1A1A;--text-light:#666}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Heebo',sans-serif;background:#fff;color:var(--text);line-height:1.8}
+
+nav{background:var(--blue);padding:14px 40px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:white;font-size:20px;font-weight:900}
+.nav-logo img{height:36px;width:36px;border-radius:8px;object-fit:cover}
+.nav-back{color:rgba(255,255,255,0.8);text-decoration:none;font-size:14px}
+.nav-back:hover{color:white}
+
+.container{max-width:760px;margin:0 auto;padding:50px 24px 80px}
+
+.page-title{font-size:32px;font-weight:900;color:var(--blue);margin-bottom:8px}
+.page-subtitle{font-size:14px;color:var(--text-light);margin-bottom:40px;padding-bottom:20px;border-bottom:2px solid var(--gray)}
+
+.section{margin-bottom:36px}
+.section-title{font-size:20px;font-weight:700;color:var(--blue);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.section p{font-size:15px;color:var(--text);margin-bottom:10px}
+.section ul{padding-right:20px;margin-top:8px}
+.section ul li{font-size:15px;color:var(--text);margin-bottom:8px;list-style:disc}
+
+.contact-box{background:var(--gray);border-radius:16px;padding:24px 28px;margin-top:16px;display:flex;align-items:center;gap:16px}
+.contact-box .icon{font-size:32px}
+.contact-box .info{flex:1}
+.contact-box .info h3{font-size:16px;font-weight:700;color:var(--blue);margin-bottom:4px}
+.contact-box .info a{color:var(--orange);font-weight:700;text-decoration:none;font-size:15px}
+.contact-box .info a:hover{text-decoration:underline}
+
+.faq-item{background:var(--gray);border-radius:14px;padding:20px 24px;margin-bottom:12px}
+.faq-item h3{font-size:16px;font-weight:700;color:var(--blue);margin-bottom:8px}
+.faq-item p{font-size:14px;color:var(--text-light)}
+
+.badge-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+.badge{background:var(--blue);color:white;padding:10px 20px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;display:inline-block}
+.badge:hover{opacity:.9}
+
+footer{background:#0A1628;color:rgba(255,255,255,0.5);text-align:center;padding:22px;font-size:13px}
+footer a{color:rgba(255,255,255,0.7);text-decoration:none;margin:0 8px}
+footer a:hover{color:var(--orange)}
+
+@media(max-width:600px){
+  nav{padding:12px 16px}
+  .container{padding:30px 16px 60px}
+  .page-title{font-size:26px}
+  .contact-box{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="LOGO1.png" alt="איתותים">
+    איתותים
+  </a>
+  <a class="nav-back" href="index.html">→ חזרה לאתר</a>
+</nav>
+
+<div class="container">
+  <h1 class="page-title">מרכז תמיכה</h1>
+  <p class="page-subtitle">אפליקציית Itutim | אנחנו כאן לעזור</p>
+
+  <div class="section">
+    <div class="section-title">📧 צור קשר</div>
+    <p>נתקלת בבעיה? יש לך שאלה? אנחנו זמינים ומשיבים תוך 24 שעות.</p>
+    <div class="contact-box">
+      <div class="icon">✉️</div>
+      <div class="info">
+        <h3>דוא"ל תמיכה</h3>
+        <a href="mailto:autochat1000@gmail.com">autochat1000@gmail.com</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">❓ שאלות נפוצות</div>
+
+    <div class="faq-item">
+      <h3>כיצד נרשמים לאפליקציה?</h3>
+      <p>הורידו את האפליקציה, הזינו את מספר הרכב, מספר הטלפון והאימייל, ואמתו את מספר הטלפון עם קוד SMS שיישלח אליכם.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>לא קיבלתי קוד SMS</h3>
+      <p>בדקו שהמספר שהזנתם נכון. אם עדיין לא קיבלתם — המתינו דקה ונסו שוב. ניתן גם לפנות אלינו במייל.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>כיצד שולחים הודעה לנהג אחר?</h3>
+      <p>הזינו את מספר הלוחית של הנהג בשדה "אל מספר רכב", בחרו איתות מהיר או כתבו הודעה חופשית, ולחצו שלח.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>לא מקבל התראות</h3>
+      <p>וודאו שהתרתם לאפליקציה לשלוח התראות בהגדרות המכשיר שלכם. ב-iOS: הגדרות → Itutim → התראות → אפשר התראות.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>כיצד מוחקים את החשבון שלי?</h3>
+      <p>שלחו מייל ל-autochat1000@gmail.com עם בקשה למחיקת החשבון ומספר הלוחית שלכם. נטפל בבקשה תוך 48 שעות.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>האפליקציה לא נפתחת</h3>
+      <p>נסו לסגור את האפליקציה לחלוטין ולפתוח מחדש. אם הבעיה נמשכת — מחקו והתקינו מחדש. פנו אלינו אם הבעיה חוזרת.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📱 הורידו את האפליקציה</div>
+    <div class="badge-row">
+      <a href="#" class="badge">▶ Google Play</a>
+      <a href="#" class="badge">🍎 App Store</a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📋 מסמכים</div>
+    <ul>
+      <li><a href="privacy.html" style="color:var(--orange)">מדיניות פרטיות</a></li>
+    </ul>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 איתותים | <a href="privacy.html">מדיניות פרטיות</a> | <a href="mailto:autochat1000@gmail.com">צור קשר</a></p>
+</footer>
+
+</body>
+</html>
