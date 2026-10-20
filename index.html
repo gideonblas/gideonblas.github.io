@@ -195,7 +195,162 @@ footer a:hover{color:var(--orange)}
   .features-grid{grid-template-columns:1fr}
   .quick-signals{grid-template-columns:1fr}
 }
+
+/* ===== REDESIGN 2026 ===== */
+:root{--plate:#FFD000;--il:#0038B8;--ink:#0A1628}
+.reveal{opacity:1}
+.js .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.js .reveal.in{opacity:1;transform:none}
+.js .reveal.d1{transition-delay:.08s}.js .reveal.d2{transition-delay:.16s}.js .reveal.d3{transition-delay:.24s}
+
+/* hero */
+.hero{position:relative;overflow:hidden;isolation:isolate}
+.hero-bg{position:absolute;inset:0;z-index:-1;pointer-events:none}
+.hero-bg::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px);background-size:26px 26px;mask-image:linear-gradient(180deg,#000 30%,transparent 95%);-webkit-mask-image:linear-gradient(180deg,#000 30%,transparent 95%)}
+.orb{position:absolute;border-radius:50%;will-change:transform}
+.orb.o1{width:520px;height:520px;top:-160px;inset-inline-start:-120px;background:radial-gradient(circle,rgba(255,107,0,.32),transparent 65%);animation:drift 14s ease-in-out infinite alternate}
+.orb.o2{width:460px;height:460px;bottom:-200px;inset-inline-end:-80px;background:radial-gradient(circle,rgba(47,123,234,.35),transparent 65%);animation:drift 18s ease-in-out infinite alternate-reverse}
+@keyframes drift{to{transform:translate(60px,40px) scale(1.08)}}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:#fff;padding:6px 14px 6px 6px;border-radius:999px;font-size:14px;font-weight:600;margin-bottom:22px}
+[dir=rtl] .hero-eyebrow{padding:6px 6px 6px 14px}
+.mini-plate{display:inline-flex;align-items:stretch;background:var(--plate);border-radius:6px;overflow:hidden;border:1.5px solid #1a1a1a;color:#111;font-weight:900;font-size:13px;letter-spacing:1px;direction:ltr}
+.mini-plate .il{background:var(--il);color:#fff;font-size:8px;display:flex;align-items:center;padding:0 4px;letter-spacing:0}
+.mini-plate .n{padding:2px 8px}
+.hero-text h1 span{background:linear-gradient(90deg,#FF6B00,#FFB000);-webkit-background-clip:text;background-clip:text;color:transparent}
+.btn-hero-reg{position:relative;overflow:hidden;box-shadow:0 10px 30px rgba(255,107,0,.35)}
+.btn-hero-reg::after{content:'';position:absolute;top:0;bottom:0;width:40%;left:-60%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-20deg);animation:shine 4.5s ease-in-out infinite}
+@keyframes shine{0%,60%{left:-60%}100%{left:130%}}
+.hero-trust{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:28px;color:rgba(255,255,255,.75);font-size:14px}
+.hero-trust span::before{content:'✓';color:#22C55E;font-weight:900;margin-inline-end:6px}
+
+/* live phone */
+.phone-mockup{position:relative;width:250px;border-radius:40px;padding:10px;background:linear-gradient(145deg,#2a2f3a,#0b0d12);box-shadow:0 40px 90px rgba(0,0,0,.55),inset 0 0 0 2px rgba(255,255,255,.08)}
+.phone-mockup::before{content:'';position:absolute;top:18px;left:50%;transform:translateX(-50%);width:70px;height:18px;background:#000;border-radius:12px;z-index:3}
+.phone-glow{position:absolute;inset:10% -20%;background:radial-gradient(circle,rgba(255,107,0,.35),transparent 60%);z-index:-1}
+.hero-phone{position:relative}
+.phone-screen{position:relative;overflow:hidden;background:linear-gradient(180deg,#F7F9FC,#fff);border-radius:30px;padding:46px 14px 14px;gap:8px;direction:rtl}
+.mk-head{display:flex;align-items:center;gap:6px;font-weight:900;color:var(--blue);font-size:14px;margin-bottom:6px}
+.mk-head img{width:22px;height:22px;border-radius:6px}
+.mk-label{font-size:10px;font-weight:700;color:#8a94a6;margin-top:4px}
+.mk-plate{display:flex;align-items:stretch;height:40px;background:var(--plate);border:2px solid #111;border-radius:8px;overflow:hidden;direction:ltr}
+.mk-plate .il{background:var(--il);color:#fff;width:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:7px;font-weight:700;line-height:1.2}
+.mk-plate .num{flex:1;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:19px;letter-spacing:2px;color:#111}
+.typed{letter-spacing:0;display:inline-block;overflow:hidden;white-space:nowrap;width:0;animation:type 9s steps(9) infinite}
+.caret{display:inline-block;width:2px;height:20px;background:#111;margin-left:2px;animation:blink .8s step-end infinite}
+@keyframes type{0%,5%{width:0}28%,100%{width:9ch}}
+@keyframes blink{50%{opacity:0}}
+.mk-signals{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.ms{background:#fff;border:1.5px solid #E3E8EF;border-radius:10px;padding:8px 6px;font-size:10px;font-weight:700;text-align:center;color:#1a1a1a}
+.ms-hit{animation:hit 9s ease infinite}
+@keyframes hit{0%,32%{background:#fff;border-color:#E3E8EF;color:#1a1a1a;transform:none}36%{transform:scale(.94)}40%,92%{background:var(--orange);border-color:var(--orange);color:#fff;transform:none}100%{background:#fff;border-color:#E3E8EF;color:#1a1a1a}}
+.mk-send{margin-top:6px;border-radius:12px;padding:10px;text-align:center;font-size:12px;font-weight:800;color:#fff;background:var(--blue);position:relative;overflow:hidden}
+.mk-send .t1,.mk-send .t2{display:block}
+.mk-send .t2{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#22C55E;opacity:0;animation:sent 9s ease infinite}
+@keyframes sent{0%,46%{opacity:0}50%,92%{opacity:1}100%{opacity:0}}
+.notif{position:absolute;top:10px;left:8px;right:8px;z-index:4;display:flex;gap:8px;align-items:center;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:16px;padding:9px 10px;box-shadow:0 10px 30px rgba(10,22,40,.25);transform:translateY(-140%);animation:notif 9s cubic-bezier(.2,.8,.2,1) infinite}
+.notif img{width:28px;height:28px;border-radius:8px;flex-shrink:0}
+.notif b{display:block;font-size:10px;color:var(--blue)}
+.notif span{font-size:11px;font-weight:700;color:#1a1a1a}
+@keyframes notif{0%,56%{transform:translateY(-140%)}62%,90%{transform:translateY(0)}96%,100%{transform:translateY(-140%)}}
+
+.mk-inbox{display:flex;flex-direction:column;gap:5px}
+.mi{display:flex;align-items:center;justify-content:space-between;gap:6px;background:#fff;border:1px solid #EEF1F6;border-radius:10px;padding:6px 8px;font-size:10px;font-weight:600;color:#3d4757}
+.mi .mini-plate{font-size:9px}.mi .mini-plate .il{font-size:6px;padding:0 3px}.mi .mini-plate .n{padding:1px 5px}
+.auth-pane .form-block-title h3{display:none}
+/* trust band */
+.trust-band{background:#fff;border-bottom:1px solid #EEF1F6}
+.trust-inner{max-width:1100px;margin:0 auto;padding:22px 20px;display:flex;flex-wrap:wrap;justify-content:center;gap:14px 40px;color:#3d4757;font-size:15px;font-weight:500}
+.trust-inner div{display:flex;align-items:center;gap:10px}
+.trust-inner i{font-style:normal;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:#FFF3EA;font-size:17px}
+
+/* features */
+.features-section{position:relative}
+.feature-card{background:#fff;border:1px solid #EAEFF5;position:relative;overflow:hidden;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s}
+.feature-card::after{content:'';position:absolute;inset:auto 0 0 0;height:3px;background:linear-gradient(90deg,var(--orange),#FFB000);transform:scaleX(0);transition:transform .4s}
+.feature-card:hover{transform:translateY(-8px);box-shadow:0 20px 44px rgba(26,58,107,.12);border-color:transparent}
+.feature-card:hover::after{transform:scaleX(1)}
+.feature-icon{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,#FF6B00,#FF9A3D);color:#fff;box-shadow:0 10px 22px rgba(255,107,0,.3);margin-bottom:18px}
+.feature-card:nth-child(2) .feature-icon{background:linear-gradient(135deg,#1A3A6B,#2F7BEA);box-shadow:0 10px 22px rgba(47,123,234,.3)}
+.feature-card:nth-child(3) .feature-icon{background:linear-gradient(135deg,#14A44D,#3DD47A);box-shadow:0 10px 22px rgba(20,164,77,.3)}
+.feature-icon svg{width:28px;height:28px}
+.feature-card h3{font-size:19px}
+.feature-card p{font-size:14px}
+
+/* how it works */
+.how-section{padding:80px 40px;background:linear-gradient(180deg,#F7F9FC,#fff)}
+.how-head{text-align:center;margin-bottom:54px}
+.how-head h2{font-size:34px;font-weight:900;color:var(--blue);margin-bottom:10px}
+.how-head p{font-size:16px;color:var(--text-light)}
+.how-steps{position:relative;max-width:960px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.how-line{position:absolute;top:28px;left:16%;right:16%;height:3px;background:#E3E8EF;border-radius:3px;overflow:hidden}
+.how-line span{position:absolute;inset:0;background:linear-gradient(90deg,#FFB000,var(--orange));transform:scaleX(0);transform-origin:right;transition:transform 1.4s cubic-bezier(.2,.7,.2,1) .3s}
+[dir=ltr] .how-line span{transform-origin:left}
+.how-steps.in .how-line span{transform:scaleX(1)}
+.how-step{text-align:center;position:relative}
+.how-num{width:58px;height:58px;margin:0 auto 18px;border-radius:50%;background:#fff;border:3px solid var(--orange);color:var(--orange);font-size:22px;font-weight:900;display:grid;place-items:center;box-shadow:0 0 0 8px #F7F9FC;position:relative;z-index:1}
+.how-step h3{font-size:18px;font-weight:800;color:var(--blue);margin-bottom:6px}
+.how-step p{font-size:14px;color:var(--text-light);max-width:250px;margin:0 auto}
+
+/* auth card with tabs */
+.forms-section{background:radial-gradient(ellipse at top,#E6EEFF,#F0F4FF 60%)}
+.auth-wrap{max-width:520px;margin:0 auto}
+.auth-head{text-align:center;margin-bottom:24px}
+.auth-head h2{font-size:32px;font-weight:900;color:var(--blue)}
+.auth-head p{font-size:15px;color:var(--text-light);margin-top:6px}
+.auth-tabs{position:relative;display:grid;grid-template-columns:1fr 1fr;background:#fff;border-radius:16px;padding:5px;box-shadow:0 4px 18px rgba(26,58,107,.08);margin-bottom:16px}
+.auth-tab{position:relative;z-index:1;border:none;background:none;font-family:'Heebo',sans-serif;font-size:16px;font-weight:700;color:var(--text-light);padding:12px;cursor:pointer;border-radius:12px;transition:color .25s}
+.auth-tab.active{color:#fff}
+.auth-ind{position:absolute;top:5px;bottom:5px;width:calc(50% - 5px);inset-inline-start:5px;background:linear-gradient(135deg,var(--orange),#FF8C35);border-radius:12px;box-shadow:0 6px 16px rgba(255,107,0,.35);transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+[dir=rtl] .auth-tabs.login .auth-ind{transform:translateX(-100%)}
+[dir=ltr] .auth-tabs.login .auth-ind{transform:translateX(100%)}
+.auth-pane{display:none}
+.auth-pane.active{display:block;animation:paneIn .35s ease}
+@keyframes paneIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.auth-pane .form-block{margin:0}
+.auth-pane .form-block-title{border-bottom:none;padding-bottom:0;margin-bottom:14px;text-align:center}
+.auth-pane .form-block-title h3{font-size:19px}
+.form-card{border:1px solid #EAEFF5;box-shadow:0 20px 50px rgba(26,58,107,.10)}
+.form-group input{background:#FAFBFD}
+.form-group input:focus{background:#fff;box-shadow:0 0 0 4px rgba(255,107,0,.12)}
+/* plate inputs */
+.plate-wrap{display:flex;align-items:stretch;border:2.5px solid #111;border-radius:10px;overflow:hidden;background:var(--plate);direction:ltr;transition:box-shadow .2s}
+.plate-wrap:focus-within{box-shadow:0 0 0 4px rgba(255,107,0,.25)}
+.plate-wrap .il{background:var(--il);color:#fff;width:34px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;font-weight:800;line-height:1.3;flex-shrink:0}
+.form-group .plate-wrap input{border:none;border-radius:0;background:transparent;font-size:24px;font-weight:900;letter-spacing:4px;text-align:center;padding:10px 12px;color:#111;box-shadow:none}
+.form-group .plate-wrap input::placeholder{color:rgba(0,0,0,.35);font-size:16px;letter-spacing:1px;font-weight:600}
+.form-group .plate-wrap input:focus{box-shadow:none;background:transparent}
+.plate-wrap input::-webkit-outer-spin-button,.plate-wrap input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.plate-wrap input[type=number]{-moz-appearance:textfield}
+
+/* download */
+.download-section{position:relative;overflow:hidden}
+.download-section::before{content:'';position:absolute;width:600px;height:600px;left:50%;top:-300px;transform:translateX(-50%);background:radial-gradient(circle,rgba(255,107,0,.22),transparent 65%)}
+.download-section>*{position:relative}
+.btn-download{background:#000!important;color:#fff!important;border:1px solid rgba(255,255,255,.25);padding:10px 22px;border-radius:12px;gap:12px;direction:ltr;text-align:left;min-width:190px}
+.btn-download svg{width:26px;height:26px;flex-shrink:0}
+.btn-download small{display:block;font-size:11px;font-weight:500;opacity:.8;line-height:1.1}
+.btn-download strong{display:block;font-size:19px;font-weight:700;line-height:1.2}
+.btn-download:hover{border-color:#fff;transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.45)}
+
+footer{padding:28px 22px}
+
+@media(max-width:768px){
+  .orb.o1{width:340px;height:340px}.orb.o2{width:300px;height:300px}
+  .hero-text{text-align:center}
+  .hero-btns,.hero-trust{justify-content:center}
+  .phone-mockup{width:220px}
+  .trust-inner{flex-direction:column;align-items:flex-start;gap:12px;max-width:340px}
+  .how-section{padding:56px 20px}
+  .how-steps{grid-template-columns:1fr;gap:34px}
+  .how-line{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .reveal{opacity:1;transform:none}
+  .typed{width:9ch}.notif{transform:none}.mk-send .t2{opacity:1}
+}
 </style>
+<script>document.documentElement.classList.add('js')</script>
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-2Y5C1ETDTK"></script>
 <script>
@@ -226,44 +381,81 @@ document.addEventListener('click',function(e){var el=e.target.closest&&e.target.
 <div id="page-landing" class="page active">
 
   <section class="hero">
+    <div class="hero-bg" aria-hidden="true"><span class="orb o1"></span><span class="orb o2"></span></div>
     <div class="hero-inner">
       <div class="hero-text">
-        <h1>תקשורת בין נהגים<br><span>בקלות</span></h1>
-        <p>שלח הודעה לכל נהג על הכביש רק עם מספר הלוחית שלו. ללא שיתוף מספר טלפון.</p>
-        <div class="hero-btns">
+        <div class="hero-eyebrow reveal"><span class="mini-plate"><span class="il">IL</span><span class="n">12-345-67</span></span><span data-he="לא מחכים, מאותתים" data-en="Don't wait, signal">לא מחכים, מאותתים</span></div>
+        <h1 class="reveal d1">תקשורת בין נהגים<br><span>בקלות</span></h1>
+        <p class="reveal d2">שלח הודעה לכל נהג על הכביש רק עם מספר הלוחית שלו. ללא שיתוף מספר טלפון.</p>
+        <div class="hero-btns reveal d3">
           <button class="btn-hero-reg" onclick="goToSection('section-register')">הרשמה חינמית 🚀</button>
           <button class="btn-hero-login" onclick="goToSection('section-login')">כניסה לרשומים</button>
         </div>
+        <div class="hero-trust reveal d3"><span data-he="חינם לנהגים" data-en="Free for drivers">חינם לנהגים</span><span data-he="בלי לחשוף טלפון" data-en="No phone number shared">בלי לחשוף טלפון</span><span data-he="iOS ו-Android" data-en="iOS & Android">iOS ו-Android</span></div>
       </div>
-      <div class="hero-phone">
+      <div class="hero-phone" aria-hidden="true">
+        <div class="phone-glow"></div>
         <div class="phone-mockup">
           <div class="phone-screen">
-            <div class="mock-logo"><img src="LOGO1.png" style="height:32px;width:32px;border-radius:6px;object-fit:cover"></div>
-            <div class="mock-title">ברוכים הבאים לאיתותים</div>
-            <div class="mock-plate"><div class="mock-flag">★<br>IL</div><div class="mock-text">שיחקת-אותה 👑</div></div>
-            <div class="mock-plate"><div class="mock-flag">★<br>IL</div><div class="mock-text">מפנה-מקום 🅿️</div></div>
-            <div class="mock-plate"><div class="mock-flag">★<br>IL</div><div class="mock-text">זהירות ❕</div></div>
-            <div class="mock-plate"><div class="mock-flag">★<br>IL</div><div class="mock-text">יום-זהב ✨</div></div>
+            <div class="notif"><img src="LOGO1.png" alt=""><div><b>איתות חדש · 12-345-67</b><span>הרכב שלך חוסם 🚗</span></div></div>
+            <div class="mk-head"><img src="LOGO1.png" alt=""> איתותים</div>
+            <div class="mk-label">למי לאותת?</div>
+            <div class="mk-plate"><div class="il">★<br>IL</div><div class="num"><span class="typed">12-345-67</span><span class="caret"></span></div></div>
+            <div class="mk-label">בחר איתות</div>
+            <div class="mk-signals">
+              <div class="ms ms-hit">הרכב שלך חוסם 🚗</div>
+              <div class="ms">אורות דולקים 💡</div>
+              <div class="ms">חלון פתוח 🪟</div>
+              <div class="ms">שיחקת-אותה 👑</div>
+            </div>
+            <div class="mk-send"><span class="t1">שלח איתות</span><span class="t2">✓ האיתות נשלח</span></div>
+            <div class="mk-label">איתותים אחרונים</div>
+            <div class="mk-inbox"><div class="mi"><span class="mini-plate"><span class="il">IL</span><span class="n">88-123-45</span></span><span>מפנה-מקום 🅿️</span></div><div class="mi"><span class="mini-plate"><span class="il">IL</span><span class="n">31-907-22</span></span><span>יום-זהב ✨</span></div><div class="mi"><span class="mini-plate"><span class="il">IL</span><span class="n">64-550-18</span></span><span>שיחקת-אותה 👑</span></div></div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
+  <div class="trust-band">
+    <div class="trust-inner">
+      <div class="reveal"><i>🏘️</i><span data-he="פועל בפיילוט קהילתי בבית הכרם, ירושלים" data-en="Running in a community pilot in Beit HaKerem, Jerusalem">פועל בפיילוט קהילתי בבית הכרם, ירושלים</span></div>
+      <div class="reveal d1"><i>📱</i><span data-he="זמין ב-App Store וב-Google Play" data-en="Available on the App Store and Google Play">זמין ב-App Store וב-Google Play</span></div>
+      <div class="reveal d2"><i>🏢</i><a href="business.html" data-track="trust_parking_managers" style="color:inherit" data-he="פתרון גם לחניונים של משרדים ובניינים" data-en="Also for office and building parking lots">פתרון גם לחניונים של משרדים ובניינים</a></div>
+    </div>
+  </div>
+
   <section class="features-section">
-    <div class="section-title"><h2>למה איתותים?</h2><p>הדרך הכי פשוטה לתקשר עם נהגים</p></div>
+    <div class="section-title reveal"><h2>למה איתותים?</h2><p>הדרך הכי פשוטה לתקשר עם נהגים</p></div>
     <div class="features-grid">
-      <div class="feature-card"><div class="feature-icon">🚗</div><h3>לפי מספר לוחית</h3><p>שלח הודעה לכל רכב רשום — רק צריך את מספר הלוחית.</p></div>
-      <div class="feature-card"><div class="feature-icon">🔔</div><h3>התראות מיידיות</h3><p>קבל התראות בזמן אמת כשמישהו שולח לך איתות.</p></div>
-      <div class="feature-card"><div class="feature-icon">🔒</div><h3>פרטיות מלאה</h3><p>ללא שיתוף מספר טלפון. רק מספר הרכב גלוי.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="10" rx="2"/><path d="M6 7v10"/><path d="M10 12h8"/></svg></div><h3>לפי מספר לוחית</h3><p>שלח הודעה לכל רכב רשום — רק צריך את מספר הלוחית.</p></div>
+      <div class="feature-card reveal d1"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></div><h3>התראות מיידיות</h3><p>קבל התראות בזמן אמת כשמישהו שולח לך איתות.</p></div>
+      <div class="feature-card reveal d2"><div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><h3>פרטיות מלאה</h3><p>ללא שיתוף מספר טלפון. רק מספר הרכב גלוי.</p></div>
+    </div>
+  </section>
+
+  <section class="how-section">
+    <div class="how-head reveal"><h2 data-he="איך זה עובד?" data-en="How it works">איך זה עובד?</h2><p data-he="שלושה צעדים, פחות מדקה" data-en="Three steps, under a minute">שלושה צעדים, פחות מדקה</p></div>
+    <div class="how-steps">
+      <div class="how-line"><span></span></div>
+      <div class="how-step reveal"><div class="how-num">1</div><h3 data-he="נרשמים עם מספר הרכב" data-en="Register with your plate">נרשמים עם מספר הרכב</h3><p data-he="הרשמה חינמית, עם אימות קצר ב-SMS" data-en="Free sign-up with a quick SMS check">הרשמה חינמית, עם אימות קצר ב-SMS</p></div>
+      <div class="how-step reveal d1"><div class="how-num">2</div><h3 data-he="מקלידים לוחית של רכב" data-en="Type another car's plate">מקלידים לוחית של רכב</h3><p data-he="בוחרים איתות מוכן או כותבים הודעה" data-en="Pick a ready signal or write a message">בוחרים איתות מוכן או כותבים הודעה</p></div>
+      <div class="how-step reveal d2"><div class="how-num">3</div><h3 data-he="הנהג מקבל התראה מיידית" data-en="The driver is notified instantly">הנהג מקבל התראה מיידית</h3><p data-he="בלי לחפש ובלי לחשוף מספרי טלפון" data-en="No searching, no phone numbers shared">בלי לחפש ובלי לחשוף מספרי טלפון</p></div>
     </div>
   </section>
 
   <!-- FORMS -->
-  <section class="forms-section">
+  <section class="forms-section" id="auth" style="scroll-margin-top:70px">
+   <div class="auth-wrap reveal">
+    <div class="auth-head"><h2 data-he="מתחילים לאותת" data-en="Start signaling">מתחילים לאותת</h2><p data-he="הרשמה חינמית לוקחת פחות מדקה" data-en="Free sign-up takes less than a minute">הרשמה חינמית לוקחת פחות מדקה</p></div>
+    <div class="auth-tabs" role="tablist">
+      <span class="auth-ind"></span>
+      <button type="button" class="auth-tab active" role="tab" data-target="section-register" data-he="הרשמה" data-en="Register">הרשמה</button>
+      <button type="button" class="auth-tab" role="tab" data-target="section-login" data-he="כניסה לרשומים" data-en="Sign In">כניסה לרשומים</button>
+    </div>
 
     <!-- הרשמה -->
-    <div id="section-register" style="scroll-margin-top:80px">
+    <div id="section-register" class="auth-pane active">
       <div class="form-block">
         <div class="form-block-title">
           <h3>🆕 הרשמה — חדשים? מתחילים כאן</h3>
@@ -272,7 +464,7 @@ document.addEventListener('click',function(e){var el=e.target.closest&&e.target.
         <div class="form-card">
           <div id="reg-alert" class="alert"></div>
           <div id="reg-step1">
-            <div class="form-group"><label>מספר לוחית רכב</label><input type="number" id="reg-plate" placeholder="לדוגמה: 1234567"></div>
+            <div class="form-group"><label>מספר לוחית רכב</label><div class="plate-wrap"><span class="il">★<br>IL</span><input type="number" id="reg-plate" placeholder="לדוגמה: 1234567"></div></div>
             <div class="form-group"><label>מספר טלפון</label><input type="tel" id="reg-phone" placeholder="לדוגמה: 0501234567"></div>
             <div class="form-group"><label>אימייל</label><input type="email" id="reg-email" placeholder="your@email.com"></div>
             <div class="terms-row">
@@ -295,7 +487,7 @@ document.addEventListener('click',function(e){var el=e.target.closest&&e.target.
     </div>
 
     <!-- כניסה -->
-    <div id="section-login" style="scroll-margin-top:80px">
+    <div id="section-login" class="auth-pane">
       <div class="form-block" style="margin-bottom:0">
         <div class="form-block-title">
           <h3>🔑 כניסה לרשומים</h3>
@@ -304,7 +496,7 @@ document.addEventListener('click',function(e){var el=e.target.closest&&e.target.
         <div class="form-card">
           <div id="login-alert" class="alert"></div>
           <div id="login-step1">
-            <div class="form-group"><label>מספר לוחית רכב</label><input type="text" id="login-plate" placeholder="לדוגמה: 1234567"></div>
+            <div class="form-group"><label>מספר לוחית רכב</label><div class="plate-wrap"><span class="il">★<br>IL</span><input type="text" id="login-plate" placeholder="לדוגמה: 1234567"></div></div>
             <div class="form-group"><label>מספר טלפון</label><input type="tel" id="login-phone" placeholder="לדוגמה: 0501234567"></div>
             <div id="recaptcha-login-container"></div>
             <button class="btn btn-primary btn-full btn-lg" onclick="loginStep1()">📱 שלח קוד אימות</button>
@@ -320,30 +512,19 @@ document.addEventListener('click',function(e){var el=e.target.closest&&e.target.
         </div>
       </div>
     </div>
+   </div>
 
   </section>
 
   <section class="download-section">
-    <h2>הורד את האפליקציה</h2>
+    <h2 class="reveal">הורד את האפליקציה</h2>
     <p>חוויה מלאה עם התראות Push</p>
     <div class="download-btns">
-      <a href="https://play.google.com/store/apps/details?id=com.gideob.itutim_final" class="btn-download btn-dl-android" data-track="download_android" target="_blank" rel="noopener">▶ Google Play</a>
-      <a href="https://apps.apple.com/app/itutim/id6760365658" class="btn-download btn-dl-ios" data-track="download_ios" target="_blank" rel="noopener">🍎 App Store</a>
+      <a href="https://play.google.com/store/apps/details?id=com.gideob.itutim_final" class="btn-download btn-dl-android" data-track="download_android" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path fill="#34A853" d="M3.6 2.2 13.3 12l-9.7 9.8c-.4-.2-.6-.6-.6-1.1V3.3c0-.5.2-.9.6-1.1z"/><path fill="#FBBC04" d="m16.6 15.3-3.3-3.3 3.3-3.3 3.7 2.1c1 .6 1 1.9 0 2.5z"/><path fill="#4285F4" d="M16.6 8.7 13.3 12 3.6 2.2c.3-.2.8-.2 1.2 0z"/><path fill="#EA4335" d="M16.6 15.3 4.8 22c-.4.2-.9.2-1.2-.1l9.7-9.9z"/></svg><span><small>GET IT ON</small><strong>Google Play</strong></span></a>
+      <a href="https://apps.apple.com/app/itutim/id6760365658" class="btn-download btn-dl-ios" data-track="download_ios" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg><span><small>Download on the</small><strong>App Store</strong></span></a>
     </div>
   </section>
 
-  <div class="simple-section" id="contact">
-    <div class="simple-inner"><h2>צור קשר</h2><p>📧 Autochat1000@gmail.com</p></div>
-  </div>
-  <div class="simple-section" id="privacy" style="background:white">
-    <div class="simple-inner">
-      <h2>מדיניות פרטיות</h2>
-      <h3>מידע שאנו אוספים</h3>
-      <p>האפליקציה אוספת מספר רכב, מספר טלפון ואימייל בעת ההרשמה לצורך אימות זהות ותקשורת.</p>
-      <h3>יצירת קשר</h3>
-      <p>Autochat1000@gmail.com</p>
-    </div>
-  </div>
   <footer><p>© 2026 איתותים | <a href="business.html" data-track="footer_parking_managers">מנהלי חניון</a> | <a href="privacy.html">מדיניות פרטיות</a> | <a href="mailto:Autochat1000@gmail.com">צור קשר</a></p></footer>
 </div>
 
@@ -981,5 +1162,35 @@ window.sendReply = async function() {
     </div>
   </div>
 </div>
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+  // tabs
+  function setAuthTab(id){
+    var tabs=document.querySelector('.auth-tabs'); if(!tabs) return;
+    document.querySelectorAll('.auth-pane').forEach(function(p){p.classList.toggle('active',p.id===id)});
+    document.querySelectorAll('.auth-tab').forEach(function(t){t.classList.toggle('active',t.getAttribute('data-target')===id)});
+    tabs.classList.toggle('login',id==='section-login');
+  }
+  document.querySelectorAll('.auth-tab').forEach(function(t){t.addEventListener('click',function(){setAuthTab(t.getAttribute('data-target'))})});
+  var origGo=window.goToSection;
+  window.goToSection=function(id){
+    if(id==='section-register'||id==='section-login'){
+      setAuthTab(id);
+      var land=document.getElementById('page-landing');
+      var go=function(){var a=document.getElementById('auth'); a.querySelector('.auth-wrap').classList.add('in'); a.scrollIntoView({behavior:'smooth',block:'start'})};
+      if(!land.classList.contains('active')){window.showPage('landing');setTimeout(go,120)}else go();
+    } else if(origGo){origGo(id)}
+  };
+  // generic data-he / data-en translation
+  var origApply=window.applyTranslations;
+  if(origApply){window.applyTranslations=function(lang){origApply(lang);document.querySelectorAll('[data-he][data-en]').forEach(function(el){el.textContent=el.getAttribute('data-'+lang)})}}
+  // scroll reveal
+  var els=document.querySelectorAll('.reveal,.how-steps');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return}
+  var io=new IntersectionObserver(function(entries){entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}})},{threshold:.15,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
 </body>
 </html>
