@@ -194,13 +194,20 @@ footer a:hover{color:var(--orange)}
   .quick-signals{grid-template-columns:1fr}
 }
 </style>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2Y5C1ETDTK"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','G-2Y5C1ETDTK');
+document.addEventListener('click',function(e){var el=e.target.closest&&e.target.closest('[data-track]');if(el){gtag('event','cta_click',{cta_name:el.getAttribute('data-track'),page:location.pathname});}},true);
+</script>
 </head>
 <body>
 
 <nav>
   <a class="nav-logo" onclick="showPage('landing');return false;" href="#"><img src="LOGO1.png" style="height:36px;width:36px;border-radius:8px;object-fit:cover"> איתותים</a>
   <div id="nav-actions-guest" class="nav-actions">
-    <a href="business.html" class="nav-biz" data-he="מנהלי חניון" data-en="Parking Managers">מנהלי חניון</a>
+    <a href="business.html" class="nav-biz" data-track="nav_parking_managers" data-he="מנהלי חניון" data-en="Parking Managers">מנהלי חניון</a>
     <button id="lang-btn" class="btn btn-outline" style="font-size:13px;padding:7px 14px">🌐 English</button>
     <button class="btn btn-secondary" onclick="goToSection('section-login')" data-he="כניסה לרשומים" data-en="Sign In">כניסה לרשומים</button>
     <button class="btn btn-primary" onclick="goToSection('section-register')" data-he="הרשמה חינמית" data-en="Register Free">הרשמה חינמית</button>
@@ -318,8 +325,8 @@ footer a:hover{color:var(--orange)}
     <h2>הורד את האפליקציה</h2>
     <p>חוויה מלאה עם התראות Push</p>
     <div class="download-btns">
-      <a href="https://play.google.com/store/apps/details?id=com.gideob.itutim_final" class="btn-download btn-dl-android" target="_blank" rel="noopener">▶ Google Play</a>
-      <a href="https://apps.apple.com/app/itutim/id6760365658" class="btn-download btn-dl-ios" target="_blank" rel="noopener">🍎 App Store</a>
+      <a href="https://play.google.com/store/apps/details?id=com.gideob.itutim_final" class="btn-download btn-dl-android" data-track="download_android" target="_blank" rel="noopener">▶ Google Play</a>
+      <a href="https://apps.apple.com/app/itutim/id6760365658" class="btn-download btn-dl-ios" data-track="download_ios" target="_blank" rel="noopener">🍎 App Store</a>
     </div>
   </section>
 
@@ -335,7 +342,7 @@ footer a:hover{color:var(--orange)}
       <p>Autochat1000@gmail.com</p>
     </div>
   </div>
-  <footer><p>© 2026 איתותים | <a href="business.html">מנהלי חניון</a> | <a href="privacy.html">מדיניות פרטיות</a> | <a href="mailto:Autochat1000@gmail.com">צור קשר</a></p></footer>
+  <footer><p>© 2026 איתותים | <a href="business.html" data-track="footer_parking_managers">מנהלי חניון</a> | <a href="privacy.html">מדיניות פרטיות</a> | <a href="mailto:Autochat1000@gmail.com">צור קשר</a></p></footer>
 </div>
 
 <!-- APP -->

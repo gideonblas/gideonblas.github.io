@@ -42,6 +42,13 @@ footer a:hover{color:var(--orange)}
   .page-title{font-size:26px}
 }
 </style>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2Y5C1ETDTK"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','G-2Y5C1ETDTK');
+document.addEventListener('click',function(e){var el=e.target.closest&&e.target.closest('[data-track]');if(el){gtag('event','cta_click',{cta_name:el.getAttribute('data-track'),page:location.pathname});}},true);
+</script>
 </head>
 <body>
 
@@ -87,6 +94,7 @@ footer a:hover{color:var(--orange)}
     <div class="section-title"><span class="section-num">4</span> שיתוף מידע עם צדדים שלישיים</div>
     <ul>
       <li><strong>Google Firebase:</strong> אנו משתמשים ב-Firebase לאחסון נתונים, ניהול משתמשים ושליחת התראות Push. המידע נשמר בשרתים המאובטחים של גוגל בהתאם למדיניות הפרטיות של Google.</li>
+      <li><strong>Google Analytics:</strong> באתר שלנו אנו משתמשים ב-Google Analytics כדי להבין כיצד גולשים משתמשים באתר (למשל אילו עמודים נצפו ועל אילו כפתורים לחצו). הכלי משתמש בעוגיות (Cookies) ואוסף מידע סטטיסטי כללי, כגון סוג מכשיר, מדינה ומקור ההגעה לאתר. ניתן לחסום עוגיות בהגדרות הדפדפן.</li>
       <li><strong>Twilio:</strong> אנו משתמשים בשירות Twilio לצורך שליחת הודעות SMS לאימות זהות. מספר הטלפון שלך מועבר ל-Twilio לצורך זה בלבד, בהתאם למדיניות הפרטיות של Twilio.</li>
       <li><strong>גורמים משפטיים:</strong> אנו עשויים לשתף מידע אם נידרש לכך על פי חוק, או כדי להגן על הזכויות והבטיחות של המשתמשים שלנו או של הציבור.</li>
     </ul>

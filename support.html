@@ -53,6 +53,13 @@ footer a:hover{color:var(--orange)}
   .contact-box{flex-direction:column;text-align:center}
 }
 </style>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2Y5C1ETDTK"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','G-2Y5C1ETDTK');
+document.addEventListener('click',function(e){var el=e.target.closest&&e.target.closest('[data-track]');if(el){gtag('event','cta_click',{cta_name:el.getAttribute('data-track'),page:location.pathname});}},true);
+</script>
 </head>
 <body>
 

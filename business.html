@@ -111,6 +111,13 @@
     tfoot .btn-sm{padding:8px 10px;font-size:13px}
   }
 </style>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2Y5C1ETDTK"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','G-2Y5C1ETDTK');
+document.addEventListener('click',function(e){var el=e.target.closest&&e.target.closest('[data-track]');if(el){gtag('event','cta_click',{cta_name:el.getAttribute('data-track'),page:location.pathname});}},true);
+</script>
 </head>
 <body>
 
