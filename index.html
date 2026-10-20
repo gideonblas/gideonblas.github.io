@@ -19,6 +19,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .btn-secondary{background:var(--gray);color:var(--text)}.btn-secondary:hover{background:var(--gray2)}
 .btn-outline{background:transparent;color:var(--blue);border:2px solid var(--blue)}.btn-outline:hover{background:var(--blue);color:white}
 #lang-btn{margin-left:8px}
+.nav-biz{color:var(--blue);font-weight:700;font-size:15px;text-decoration:none;margin-left:6px}.nav-biz:hover{color:var(--orange)}
 .btn-success{background:var(--success);color:white}.btn-success:hover{opacity:.9}
 .btn-lg{padding:14px 32px;font-size:17px;border-radius:14px}
 .btn-full{width:100%}
@@ -169,6 +170,18 @@ footer a:hover{color:var(--orange)}
 
 @media(max-width:768px){
   nav{padding:12px 16px}
+  .nav-biz{font-size:13px;margin-left:0;white-space:nowrap}
+  nav{flex-wrap:wrap;row-gap:8px;padding:10px 12px}
+  .nav-actions{width:100%;justify-content:space-between;gap:4px}
+  .nav-actions .btn,#lang-btn{padding:6px 9px!important;font-size:12px!important;white-space:nowrap}
+  .nav-biz{font-size:12px}
+  #lang-btn{margin-left:0}
+  #page-landing,#page-app{padding-top:104px}
+}
+@media(max-width:380px){
+  .nav-actions .btn,#lang-btn{padding:5px 6px!important;font-size:11px!important;border-width:1px!important}
+  .nav-biz{font-size:11px}
+  .nav-actions{gap:2px}
   .hero{padding:60px 20px 70px}
   .hero-inner{grid-template-columns:1fr;gap:32px}
   .hero-text h1{font-size:36px}
@@ -187,6 +200,7 @@ footer a:hover{color:var(--orange)}
 <nav>
   <a class="nav-logo" onclick="showPage('landing');return false;" href="#"><img src="LOGO1.png" style="height:36px;width:36px;border-radius:8px;object-fit:cover"> איתותים</a>
   <div id="nav-actions-guest" class="nav-actions">
+    <a href="business.html" class="nav-biz" data-he="מנהלי חניון" data-en="Parking Managers">מנהלי חניון</a>
     <button id="lang-btn" class="btn btn-outline" style="font-size:13px;padding:7px 14px">🌐 English</button>
     <button class="btn btn-secondary" onclick="goToSection('section-login')" data-he="כניסה לרשומים" data-en="Sign In">כניסה לרשומים</button>
     <button class="btn btn-primary" onclick="goToSection('section-register')" data-he="הרשמה חינמית" data-en="Register Free">הרשמה חינמית</button>
@@ -321,7 +335,7 @@ footer a:hover{color:var(--orange)}
       <p>Autochat1000@gmail.com</p>
     </div>
   </div>
-  <footer><p>© 2026 איתותים | <a href="privacy.html">מדיניות פרטיות</a> | <a href="mailto:Autochat1000@gmail.com">צור קשר</a></p></footer>
+  <footer><p>© 2026 איתותים | <a href="business.html">מנהלי חניון</a> | <a href="privacy.html">מדיניות פרטיות</a> | <a href="mailto:Autochat1000@gmail.com">צור קשר</a></p></footer>
 </div>
 
 <!-- APP -->

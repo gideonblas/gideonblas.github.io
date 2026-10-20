@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>איתותים לעסקים | פחות דרמה בחניון, יותר אנרגיה במשרד</title>
+<meta name="description" content="איתותים לחברות ומשרדים: שחרור חסימות בחניון בלי קבוצות וואטסאפ. הצטרפו ללא עלות לכל החברה.">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --orange:#FF6B00; --orange-light:#FF8C35;
+    --blue:#1A3A6B; --blue-dark:#0A1628; --sky:#2F7BEA;
+    --yellow:#FFD000; --white:#FFFFFF; --gray:#F5F7FA; --line:#E3E8EF;
+    --text:#1A1A1A; --text-light:#5B6472; --green:#14A44D; --red:#D93B3B;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Heebo',sans-serif;background:var(--white);color:var(--text);line-height:1.6;overflow-x:hidden}
+  a{color:inherit}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{font-weight:900;font-size:22px;color:var(--blue);text-decoration:none}
+  .logo span{color:var(--orange)}
+  .nav-links{display:flex;gap:24px;align-items:center}
+  .nav-links a{text-decoration:none;font-weight:500;font-size:15px}
+  .nav-links a:hover{color:var(--orange)}
+  .btn{display:inline-block;text-decoration:none;font-weight:700;border-radius:12px;padding:14px 28px;font-size:17px;transition:transform .15s,box-shadow .15s;border:none;cursor:pointer;font-family:inherit}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-primary{background:var(--orange);color:#fff;box-shadow:0 8px 24px rgba(255,107,0,.35)}
+  .btn-ghost{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.5)}
+  .btn-sm{padding:9px 18px;font-size:15px;box-shadow:none}
+
+  /* HERO */
+  .hero{background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue) 55%,#0F2447 100%);color:#fff;padding:90px 0 80px;text-align:center;position:relative;overflow:hidden}
+  .hero::after{content:'';position:absolute;inset:auto -10% -60% -10%;height:70%;background:radial-gradient(ellipse at center,rgba(255,107,0,.25),transparent 70%)}
+  .tag{display:inline-block;background:rgba(255,208,0,.15);color:var(--yellow);border:1px solid rgba(255,208,0,.4);padding:6px 16px;border-radius:999px;font-weight:700;font-size:14px;margin-bottom:22px}
+  .hero h1{font-size:clamp(34px,6vw,60px);font-weight:900;line-height:1.15;margin-bottom:20px}
+  .hero h1 em{font-style:normal;color:var(--yellow)}
+  .hero p{font-size:clamp(17px,2.2vw,21px);opacity:.9;max-width:680px;margin:0 auto 34px}
+  .hero-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+
+  section{padding:80px 0}
+  .sec-title{font-size:clamp(28px,4vw,40px);font-weight:900;color:var(--blue);text-align:center;margin-bottom:12px}
+  .sec-sub{text-align:center;color:var(--text-light);font-size:18px;max-width:640px;margin:0 auto 48px}
+  .gray{background:var(--gray)}
+
+  /* PAIN */
+  .grid{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:28px}
+  .card .ico{font-size:34px;margin-bottom:12px}
+  .card h3{font-size:20px;color:var(--blue);margin-bottom:8px}
+  .card p{color:var(--text-light)}
+
+  /* HOW */
+  .steps{counter-reset:s;display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .step{position:relative;padding:28px 24px 24px;border-radius:18px;background:#fff;border:1px solid var(--line)}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;top:-18px;right:24px;width:40px;height:40px;border-radius:50%;background:var(--orange);color:#fff;font-weight:900;display:grid;place-items:center;font-size:18px}
+  .step h3{color:var(--blue);margin:8px 0 6px;font-size:19px}
+  .step p{color:var(--text-light)}
+
+  /* AUDIENCE */
+  .chips{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+  .chip{background:#fff;border:1px solid var(--line);border-radius:999px;padding:10px 20px;font-weight:500}
+
+  /* PRICING TABLE */
+  .table-wrap{overflow-x:auto;border-radius:20px;border:1px solid var(--line);background:#fff;box-shadow:0 12px 40px rgba(26,58,107,.08)}
+  table{width:100%;border-collapse:collapse;min-width:560px}
+  th,td{padding:16px 18px;text-align:center;border-bottom:1px solid var(--line)}
+  th:first-child,td:first-child{text-align:right;font-weight:500}
+  thead th{padding:28px 18px;vertical-align:top}
+  thead th.plan h3{font-size:22px;font-weight:900}
+  thead th.plan .price{font-size:30px;font-weight:900;margin:6px 0 2px}
+  thead th.plan .note{font-size:14px;color:var(--text-light);font-weight:400}
+  .free h3,.free .price{color:var(--green)}
+  .biz{background:linear-gradient(180deg,rgba(47,123,234,.08),rgba(47,123,234,.02))}
+  .biz h3,.biz .price{color:var(--sky)}
+  td.biz{background:rgba(47,123,234,.04)}
+  .yes{color:var(--green);font-weight:900;font-size:20px}
+  .no{color:#B7BEC9;font-size:20px}
+  .soon{display:inline-block;background:rgba(255,208,0,.2);color:#8A6A00;border:1px solid rgba(255,208,0,.6);font-size:13px;font-weight:700;padding:3px 12px;border-radius:999px}
+  .popular{display:inline-block;background:var(--sky);color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:8px}
+  tbody tr:last-child td{border-bottom:none}
+  tfoot td{padding:22px 18px;border-top:1px solid var(--line)}
+  .table-note{text-align:center;color:var(--text-light);font-size:14px;margin-top:16px}
+
+  /* FINAL CTA */
+  .final{background:linear-gradient(135deg,var(--orange) 0%,var(--orange-light) 100%);color:#fff;text-align:center;border-radius:28px;padding:56px 24px}
+  .final h2{font-size:clamp(28px,4vw,40px);font-weight:900;margin-bottom:24px}
+  .final p{font-size:19px;opacity:.95;margin-bottom:28px}
+  .final .btn{background:#fff;color:var(--orange);box-shadow:0 8px 24px rgba(0,0,0,.15)}
+  .slogan{font-weight:900;font-size:22px;margin-top:26px;color:var(--blue-dark)}
+
+  footer{background:var(--blue-dark);color:rgba(255,255,255,.75);padding:32px 0;text-align:center;font-size:14px}
+  footer a{color:#fff;text-decoration:none;margin:0 10px}
+
+  @media(max-width:700px){
+    .nav-links a:not(.btn){display:none}
+    section{padding:60px 0}
+    .hero{padding:64px 0 60px}
+    table{min-width:0}
+    th,td{padding:10px 6px;font-size:13px}
+    th:first-child,td:first-child{width:44%}
+    thead th{padding:18px 6px}
+    thead th.plan h3{font-size:16px}
+    thead th.plan .price{font-size:20px}
+    thead th.plan .note,.popular{font-size:11px}
+    .soon{font-size:11px;padding:2px 8px}
+    tfoot .btn-sm{padding:8px 10px;font-size:13px}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="index.html" class="logo" style="display:flex;align-items:center;gap:8px"><img src="LOGO1.png" alt="" style="height:36px;width:36px;border-radius:8px;object-fit:cover"> איתותים</a>
+    <div class="nav-links">
+            <a href="#plans">מסלולים</a>
+      <a href="index.html">לנהגים</a>
+      <a href="#join" class="btn btn-primary btn-sm">הצטרפו ללא עלות</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="tag">🏢 איתותים לחברות ומשרדים</div>
+    <h1>פחות דרמה בחניון,<br><em>יותר אנרגיה במשרד</em></h1>
+    <p>סובלים מחניון קטן מדי ועובדים מתוסכלים?<br>חסימת רכבים ותרבות חניה שיוצרת חיכוך יומיומי?<br><strong>אנחנו הפיתרון שלכם</strong></p>
+    <div class="hero-cta">
+      <a href="#join" class="btn btn-primary">הירשמו לניסיון ללא עלות לכל החברה</a>
+      <a href="#plans" class="btn btn-ghost">השוואת מסלולים</a>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2 class="sec-title">איתותים - ITUTIM</h2>
+    <p class="sec-sub">אפליקציה חכמה לשליחת הודעות ישירות בין נהגים על פי מספר לוחית בלבד</p>
+    <div class="grid">
+      <div class="card"><div class="ico">⚡</div><h3>שחרור חסימות מהיר</h3><p>בלי לחפש למי שייך הרכב ובלי להציף את קבוצות הוואטסאפ של המשרד</p></div>
+      <div class="card"><div class="ico">💡</div><h3>עדכון חברים</h3><p>בין עובדים במקרה של בעיה ברכב חונה, כמו אורות שנותרו דלוקים או חלון פתוח</p></div>
+      <div class="card"><div class="ico">🤝</div><h3>תקשורת בריאה ומכבדת</h3><p>ובעיקר מתן כלים של תקשורת בריאה ומכבדת במקום תסכול חוזר</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="plans">
+  <div class="wrap">
+    <h2 class="sec-title">בחרו מסלול</h2>
+    <p class="sec-sub">כל הפרטים במבט אחד</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th class="plan free">
+              <h3>מסלול בסיס</h3>
+              <div class="price">₪0</div>
+              <div class="note">ללא עלות, לכל החברה</div>
+            </th>
+            <th class="plan biz">
+              <div class="popular">למשרדים גדולים</div>
+              <h3>מסלול עסקי</h3>
+              <div class="price">מנוי חודשי</div>
+              <div class="note">בהתאמה לגודל החברה</div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>מספר עובדים</td><td>ללא הגבלה</td><td class="biz">ללא הגבלה</td></tr>
+          <tr><td>הודעות בין נהגים לפי לוחית רישוי</td><td><span class="yes">✓</span></td><td class="biz"><span class="yes">✓</span></td></tr>
+          <tr><td>הודעות מוכנות מראש (חסימה, אורות דלוקים, חלון פתוח)</td><td><span class="yes">✓</span></td><td class="biz"><span class="yes">✓</span></td></tr>
+          <tr><td>התראות בזמן אמת</td><td><span class="yes">✓</span></td><td class="biz"><span class="yes">✓</span></td></tr>
+          <tr><td>הודעות מותאמות בשם החברה</td><td><span class="no">—</span></td><td class="biz"><span class="yes">✓</span></td></tr>
+          <tr><td>קליטת עובדים מרוכזת מקובץ אקסל</td><td><span class="no">—</span></td><td class="biz"><span class="yes">✓</span></td></tr>
+          <tr><td>לוח ניהול למנהלת המשרד</td><td><span class="no">—</span></td><td class="biz"><span class="yes">✓</span></td></tr>
+          <tr><td>רישום רכבי אורחים וספקים</td><td><span class="no">—</span></td><td class="biz"><span class="soon">בקרוב</span></td></tr>
+          <tr><td>דוחות שימוש (חסימות ששוחררו, זמני תגובה)</td><td><span class="no">—</span></td><td class="biz"><span class="yes">✓</span></td></tr>
+          <tr><td>מיתוג החברה באפליקציה</td><td><span class="no">—</span></td><td class="biz"><span class="yes">✓</span></td></tr>
+          <tr><td>חומרים גרפיים להטמעה בפלטפורמות הדיגיטליות</td><td>גרפיקות גנריות</td><td class="biz">גרפיקות מותאמות עם מיתוג החברה</td></tr>
+          <tr><td>פרינטים למיתוג החניון והמשרד</td><td>בתשלום מלא</td><td class="biz"><strong style="color:var(--sky)">בעלות סמלית</strong></td></tr>
+          <tr><td>תמיכה</td><td>במייל</td><td class="biz">עדיפות + ליווי בהטמעה</td></tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td></td>
+            <td><a href="#join" class="btn btn-primary btn-sm">הצטרפו ללא עלות</a></td>
+            <td class="biz"><a href="https://wa.me/31642787938" target="_blank" rel="noopener" class="btn btn-sm" style="background:var(--sky);color:#fff">דברו איתנו</a></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+      </div>
+</section>
+
+<section class="gray" style="padding:56px 0">
+  <div class="wrap">
+    <h2 class="sec-title" style="margin-bottom:28px">למי זה מתאים</h2>
+    <div class="chips">
+      <span class="chip">🏢 מנהלות ומנהלי משרד</span>
+      <span class="chip">🛠️ מנהלי אחזקה ותפעול</span>
+      <span class="chip">👥 משאבי אנוש ורווחה</span>
+      <span class="chip">🏙️ חברות ניהול מבנים ומגדלי משרדים</span>
+      <span class="chip">🏠 מנהלי חניוני מגורים</span>
+      <span class="chip">💼 מתחמי Coworking</span>
+      <span class="chip">🏥 בתי חולים ומוסדות</span>
+      <span class="chip">🎓 קמפוסים ומכללות</span>
+      <span class="chip">🏭 פארקי תעשייה והייטק</span>
+    </div>
+  </div>
+</section>
+
+<section id="join" style="padding-top:0">
+  <div class="wrap">
+    <div class="final">
+      <h2>הירשמו לניסיון ללא עלות לכל החברה</h2>
+            <a href="mailto:autochat1000@gmail.com?subject=%D7%94%D7%A8%D7%A9%D7%9E%D7%94%20%D7%9C%D7%90%D7%99%D7%AA%D7%95%D7%AA%D7%99%D7%9D%20%D7%9C%D7%A2%D7%A1%D7%A7%D7%99%D7%9D&body=%D7%A9%D7%9D%20%D7%94%D7%97%D7%91%D7%A8%D7%94%3A%0A%D7%9E%D7%A1%D7%A4%D7%A8%20%D7%A2%D7%95%D7%91%D7%93%D7%99%D7%9D%3A%0A%D7%90%D7%99%D7%A9%20%D7%A7%D7%A9%D7%A8%20%D7%95%D7%98%D7%9C%D7%A4%D7%95%D7%9F%3A" class="btn">אני רוצה להצטרף ←</a>
+      <div class="slogan">לא מחכים, מאותתים</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a href="index.html">דף הבית</a>·<a href="privacy.html">מדיניות פרטיות</a>·<a href="mailto:autochat1000@gmail.com">צור קשר</a>
+    <p style="margin-top:10px">© 2026 איתותים ITUTIM</p>
+  </div>
+</footer>
+
+</body>
+</html>
