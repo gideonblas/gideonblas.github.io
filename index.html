@@ -842,24 +842,25 @@ const app = initializeApp({
   appId: "1:653690224720:web:cf1489c3ff95cc90215155"
 });
 const auth = getAuth(app);
-// קריאה ישירה לפונקציות v2
-async function sendSmsCode(data) {
-  const res = await fetch('https://sendverificationsms-6lakoqxf2a-uc.a.run.app', {
+// קריאה לפונקציות האימות (019) עם הגבלות בשרת
+async function callFn(url, data, fallbackMsg) {
+  const res = await fetch(url, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({data})
   });
-  if (!res.ok) throw new Error('שגיאה בשליחת SMS: ' + res.status);
-  return res.json();
+  let body = null;
+  try { body = await res.json(); } catch (e) {}
+  if (!res.ok) {
+    throw new Error((body && body.error && body.error.message) || (fallbackMsg + ' (' + res.status + ')'));
+  }
+  return body;
+}
+async function sendSmsCode(data) {
+  return callFn('https://websendcode-6lakoqxf2a-uc.a.run.app', data, 'שגיאה בשליחת SMS');
 }
 async function verifySmsCode(data) {
-  const res = await fetch('https://verifycodeweb-6lakoqxf2a-uc.a.run.app', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({data})
-  });
-  if (!res.ok) throw new Error('קוד שגוי');
-  return res.json();
+  return callFn('https://webverifycode-6lakoqxf2a-uc.a.run.app', data, 'קוד שגוי');
 }
 const db = getFirestore(app);
 
@@ -953,7 +954,7 @@ window.registerStep2 = async function() {
     document.getElementById('nav-actions-user').style.display = 'flex';
     document.getElementById('nav-plate').textContent = plate;
     showAppPage();
-  } catch(e) { showAlert('reg-alert', 'קוד שגוי, נסה שוב', 'error'); }
+  } catch(e) { showAlert('reg-alert', (e && e.message) || 'קוד שגוי, נסה שוב', 'error'); }
 };
 
 window.backToStep1 = function() {
